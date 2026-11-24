@@ -8,16 +8,13 @@
   // ---------------------------------------------------------------------------
   // Configuração do GitHub
   // ---------------------------------------------------------------------------
+  // Os projetos exibidos são os cards do HTML. Só os que têm data-repo="nome-do-repositório"
+  // recebem dados do GitHub (linguagem e data de atualização); nenhum outro repositório é listado.
   var GH_USUARIO = 'myoshida-dev';
-  // Repositórios que não devem aparecer no portfólio (forks também ficam de fora).
-  var OCULTAR = ['teste1'];
   var CORES_LINGUAGEM = {
     JavaScript: '#f1e05a', TypeScript: '#3178c6', HTML: '#e34c26', CSS: '#663399',
     Python: '#3572A5', Java: '#b07219', PHP: '#4F5D95', Shell: '#89e051', 'Jupyter Notebook': '#DA5B0B'
   };
-
-  // Chamado quando a lista de projetos muda (a parte animada se registra aqui).
-  var aoAtualizarProjetos = function () {};
 
   // A assinatura do topo é copiada para o contato (um único SVG no HTML).
   var sigTopo = document.querySelector('.hero__assinatura svg');
@@ -169,27 +166,16 @@
         scrollTrigger: { trigger: secH, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true }
       });
 
-      // Parallax dentro de cada card enquanto ele atravessa a tela
-      var parallaxCards = [];
-      var montarParallax = function () {
-        parallaxCards.forEach(function (t) { t.scrollTrigger && t.scrollTrigger.kill(); t.kill(); });
-        parallaxCards = [];
-        trilho.querySelectorAll('.cartao__midia img, .cartao__arte').forEach(function (alvo) {
-          parallaxCards.push(gsap.fromTo(alvo, { xPercent: -6 }, {
-            xPercent: 6, ease: 'none',
-            scrollTrigger: {
-              trigger: alvo.closest('.cartao'), containerAnimation: trilhoTween,
-              start: 'left right', end: 'right left', scrub: true
-            }
-          }));
+      // Parallax do print dentro de cada card enquanto ele atravessa a tela
+      trilho.querySelectorAll('[data-parallax]').forEach(function (img) {
+        gsap.fromTo(img, { xPercent: -5 }, {
+          xPercent: 5, ease: 'none',
+          scrollTrigger: {
+            trigger: img.closest('.projeto'), containerAnimation: trilhoTween,
+            start: 'left right', end: 'right left', scrub: true
+          }
         });
-      };
-      montarParallax();
-
-      aoAtualizarProjetos = function () {
-        montarParallax();
-        ScrollTrigger.refresh();
-      };
+      });
     }
 
     // --- Habilidades: faixas correm em sentidos opostos ---
@@ -317,9 +303,11 @@
   // ===========================================================================
   // GITHUB AO VIVO
   // ===========================================================================
+  // Atualiza o perfil e, nos cards com data-repo, a linguagem e a data do último push.
+  // Se a API não responder, ficam os valores escritos no HTML.
   function carregarGitHub() {
-    var alvo = document.querySelector('[data-repos]');
-    if (!alvo || !window.fetch) return;
+    var cards = document.querySelectorAll('[data-repo]');
+    if (!window.fetch) return;
 
     var api = 'https://api.github.com/users/' + GH_USUARIO;
     var pegar = function (url) {
@@ -327,79 +315,35 @@
         .then(function (r) { if (!r.ok) throw new Error('GitHub respondeu ' + r.status); return r.json(); });
     };
 
-    Promise.all([pegar(api), pegar(api + '/repos?sort=pushed&per_page=100')])
+    Promise.all([pegar(api), pegar(api + '/repos?per_page=100')])
       .then(function (res) {
         var perfil = res[0];
-        var repos = res[1]
-          .filter(function (r) { return !r.fork && !r.archived && OCULTAR.indexOf(r.name) === -1; })
-          .sort(function (a, b) {
-            return (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at));
-          });
+        var porNome = {};
+        res[1].forEach(function (r) { porNome[r.name] = r; });
 
         preencher('[data-gh="nome"]', perfil.name || perfil.login);
         preencher('[data-gh="repos"]', String(perfil.public_repos));
 
-        if (repos.length) {
-          alvo.textContent = '';
-          repos.forEach(function (r) { alvo.appendChild(cartaoRepo(r)); });
-        }
-        aoAtualizarProjetos();
+        Array.prototype.forEach.call(cards, function (card) {
+          var repo = porNome[card.dataset.repo];
+          if (!repo) return;
+          var ling = card.querySelector('[data-gh-ling]');
+          if (ling && repo.language) {
+            ling.textContent = repo.language;
+            ling.style.setProperty('--cor', CORES_LINGUAGEM[repo.language] || 'var(--sage)');
+          }
+          var data = card.querySelector('[data-gh-atualizado]');
+          if (data) data.textContent = 'Atualizado ' + dataCurta(repo.pushed_at);
+        });
       })
       .catch(function (erro) {
-        // Sem internet ou limite da API atingido: fica a versão estática do HTML.
-        console.info('Projetos do GitHub: usando a versão estática.', erro.message);
+        console.info('GitHub indisponível: mantendo os dados do HTML.', erro.message);
       });
   }
 
   function preencher(seletor, texto) {
     var el = document.querySelector(seletor);
     if (el && texto) el.textContent = texto;
-  }
-
-  function cartaoRepo(r) {
-    var a = criar('a', 'cartao');
-    a.href = r.html_url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-
-    var midia = criar('div', 'cartao__midia');
-    var img = criar('img');
-    img.src = 'https://opengraph.githubassets.com/1/' + GH_USUARIO + '/' + encodeURIComponent(r.name);
-    img.alt = '';
-    img.width = 1200;
-    img.height = 600;
-    img.loading = 'lazy';
-    img.addEventListener('error', function () { midia.remove(); });
-    midia.appendChild(img);
-    a.appendChild(midia);
-
-    var corpo = criar('div', 'cartao__corpo');
-    var meta = criar('p', 'cartao__meta');
-    if (r.language) {
-      var ling = criar('span', 'ling', r.language);
-      ling.style.setProperty('--cor', CORES_LINGUAGEM[r.language] || 'var(--sage)');
-      meta.appendChild(ling);
-    }
-    meta.appendChild(criar('span', '', 'Atualizado ' + dataCurta(r.pushed_at)));
-    if (r.stargazers_count) meta.appendChild(criar('span', '', '★ ' + r.stargazers_count));
-    corpo.appendChild(meta);
-    corpo.appendChild(criar('h3', 'cartao__titulo', r.name));
-    if (r.description) corpo.appendChild(criar('p', 'cartao__desc', r.description));
-    if (r.topics && r.topics.length) {
-      var ul = criar('ul', 'cartao__topicos');
-      r.topics.slice(0, 4).forEach(function (t) { ul.appendChild(criar('li', '', t)); });
-      corpo.appendChild(ul);
-    }
-    corpo.appendChild(criar('span', 'cartao__link', 'Ver repositório ↗'));
-    a.appendChild(corpo);
-    return a;
-  }
-
-  function criar(tag, classe, texto) {
-    var el = document.createElement(tag);
-    if (classe) el.className = classe;
-    if (texto) el.textContent = texto;
-    return el;
   }
 
   function dataCurta(iso) {

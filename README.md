@@ -15,7 +15,7 @@
 |---|---|
 | **Início** | Fundo preto com uma carteira de identidade ilustrativa. A rolagem amplia a foto 3x4, que perde a cor até virar um card; então a assinatura se desenha traço por traço, com faixas de texto correndo ao fundo. |
 | **Sobre** | A frase de apresentação "acende" palavra por palavra e o fundo do site passa de escuro para claro. |
-| **Projetos** | A página trava e os cards andam na horizontal. Os repositórios públicos são carregados da API do GitHub. |
+| **Projetos** | A página trava e os cards andam na horizontal: loja Kōbo, app DrunkRats e intranet VoltHub, cada um com o print do projeto. Linguagem e data de atualização vêm dos repositórios no GitHub. |
 | **Habilidades** | Duas faixas de tecnologias correm em sentidos opostos. |
 | **Experiência** | A linha do tempo se preenche conforme a leitura. |
 | **Certificados** | As imagens se abrem em formato oval, com zoom suave. |
@@ -31,7 +31,7 @@ Quem ativa "reduzir movimento" no sistema (ou se as bibliotecas não carregarem)
 | [GSAP 3.13](https://gsap.com) + ScrollTrigger | Animações presas à posição do scroll. |
 | DrawSVG (plugin do GSAP) | Desenho da assinatura a partir de traços SVG. |
 | [Lenis 1.1](https://lenis.darkroom.engineering) | Scroll suave. |
-| API do GitHub | Lista de repositórios, foto e dados do perfil. |
+| API do GitHub | Dados do perfil e, nos projetos ligados a um repositório, linguagem e data de atualização. |
 
 As bibliotecas são carregadas por CDN (jsDelivr) e são gratuitas.
 
@@ -45,12 +45,12 @@ Basta abrir o `index.html` no navegador. Para testar como num servidor, qualquer
 index.html      conteúdo do site (a assinatura fica em SVG inline no topo)
 css/style.css   estilos e a carteira de identidade
 js/main.js      scroll suave, animações, assinatura e projetos do GitHub
-assets/         foto, assinatura (PNG original + SVG), certificados (PDF) e prévias
+assets/         foto, assinatura (PNG original + SVG), prints dos projetos e certificados
 ```
 
 ## Personalização
 
-- **Esconder um repositório:** adicione o nome à lista `OCULTAR` no início de `js/main.js`. Forks e repositórios arquivados já ficam de fora.
+- **Projetos exibidos:** são os cards `.projeto` em `index.html` (prints em `assets/projetos/`). Para ligar um card a um repositório, use `data-repo="nome-do-repositório"`; nenhum outro repositório é puxado.
 - **Ordem do desenho da assinatura:** é a ordem dos `<path>` dentro do SVG do topo em `index.html`.
 - **Trocar a foto:** substitua `assets/matheus.jpeg` (de preferência na vertical). A carteira e o card usam o mesmo recorte.
 - **Cores:** os tokens ficam no início de `css/style.css` (`--lima` é a cor da assinatura).

@@ -400,51 +400,60 @@ html:not(.anim) .hero__entrada { display: none; }  /* sem animação: só o esta
 .perfil-gh__texto { display: flex; flex-direction: column; line-height: 1.3; font-size: 13px; color: var(--muted); }
 .perfil-gh__texto strong { color: var(--text); font-size: 15px; }
 
-.repos { display: flex; gap: clamp(16px, 2vw, 28px); }
-
-.cartao {
-  width: clamp(290px, 30vw, 440px);
-  min-height: min(68vh, 580px);
+/* Cards de projeto: print do projeto em cima, texto e links embaixo */
+.projeto {
+  width: clamp(300px, 44vw, 640px);
   display: flex; flex-direction: column;
   background: var(--bg-2);
   border: 1px solid var(--line);
   border-radius: var(--raio);
   overflow: hidden;
-  text-decoration: none;
-  transition: border-color .3s, transform .4s;
+  transition: border-color .3s;
 }
-a.cartao:hover { border-color: var(--destaque); }
+.projeto:hover { border-color: var(--destaque); }
 
-.cartao__midia { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--escuro); }
-.cartao__midia img {
-  position: absolute; top: 0; left: -8%;
-  width: 116%; max-width: none; height: 100%;
-  object-fit: cover;
-  filter: grayscale(.85) contrast(1.05);
+.projeto__midia {
+  position: relative; display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #000;
+}
+/* Imagem um pouco mais larga que o card para o parallax lateral */
+.projeto__midia img[data-parallax] {
+  position: absolute; top: 0; left: -6%;
+  width: 112%; max-width: none; height: 100%;
+  object-fit: cover; object-position: top center;
+  will-change: transform;
   transition: filter .5s;
 }
-a.cartao:hover .cartao__midia img { filter: none; }
-.cartao__midia--arte { background: var(--fundo); display: grid; place-items: center; }
-.cartao__arte {
-  font-family: var(--display); font-style: italic; font-weight: 300;
-  font-size: clamp(90px, 10vw, 150px); line-height: 1;
-  color: var(--tinta-escura);
-  will-change: transform;
+.projeto:hover .projeto__midia img[data-parallax] { filter: brightness(1.08); }
+
+/* App de celular: a tela fica em pé no centro, sobre um fundo desfocado do próprio print */
+.projeto__midia--celular .projeto__fundo { filter: blur(22px) brightness(.45) saturate(1.2); }
+.projeto:hover .projeto__midia--celular .projeto__fundo { filter: blur(22px) brightness(.55) saturate(1.2); }
+.projeto__tela {
+  position: absolute; left: 50%; top: 50%;
+  height: 88%; width: auto; max-width: none;
+  aspect-ratio: 613 / 911;
+  translate: -50% -50%;
+  border-radius: 14px;
+  box-shadow: 0 24px 50px oklch(0 0 0 / .6);
 }
 
-.cartao__corpo { display: flex; flex-direction: column; gap: 10px; padding: 24px 24px 26px; flex: 1; }
-.cartao__meta {
+.projeto__corpo { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 24px; flex: 1; }
+.projeto__meta {
   display: flex; flex-wrap: wrap; gap: 6px 14px;
   font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--muted);
 }
+.projeto__meta span:empty { display: none; }
 .ling { display: inline-flex; align-items: center; gap: 7px; }
 .ling::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--cor, var(--sage)); }
-.cartao__titulo { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.05; letter-spacing: -.02em; }
-.cartao__desc { color: var(--muted); font-size: 15px; }
-.cartao__topicos { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
-.cartao__topicos li { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); }
-.cartao__link { margin-top: auto; padding-top: 10px; font-weight: 700; font-size: 14px; color: var(--destaque); }
+.projeto__titulo { font-family: var(--display); font-weight: 400; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.05; letter-spacing: -.02em; }
+.projeto__desc { color: var(--muted); font-size: 15px; max-width: 58ch; }
+.projeto__links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: auto; padding-top: 8px; }
+.projeto__links a { font-weight: 700; font-size: 14px; color: var(--destaque); text-decoration: none; }
+.projeto__links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .painel--fim {
   justify-content: center;

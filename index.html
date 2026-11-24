@@ -144,61 +144,65 @@
     </div>
   </section>
 
-  <!-- ============ PROJETOS: rolagem horizontal + repositórios do GitHub ao vivo ============ -->
+  <!-- ============ PROJETOS: rolagem horizontal com os projetos escolhidos ============ -->
+  <!-- Só aparecem os cards abaixo. Cards com data-repo têm linguagem e data de atualização
+       puxadas do repositório no GitHub; nenhum outro repositório é listado. -->
   <section id="projetos" class="horizontal" data-tema="escuro" aria-labelledby="projetos-titulo">
     <div class="horizontal__fixo">
       <div class="horizontal__trilho">
 
         <div class="painel painel--intro">
           <p class="sobretitulo">02 — Projetos</p>
-          <h2 id="projetos-titulo" class="titulo" data-revelar-letras>Do GitHub direto pra cá.</h2>
-          <p class="painel__texto">Os repositórios públicos são carregados ao vivo da API do GitHub. Subiu um projeto novo, ele aparece aqui.</p>
+          <h2 id="projetos-titulo" class="titulo" data-revelar-letras>Projetos em destaque.</h2>
+          <p class="painel__texto">Uma loja, um app e uma intranet. Linguagem e data de atualização vêm direto dos repositórios no GitHub.</p>
           <a class="perfil-gh" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
             <img class="perfil-gh__avatar" src="https://avatars.githubusercontent.com/u/199529052?v=4" alt="" width="52" height="52" loading="lazy">
             <span class="perfil-gh__texto">
               <strong data-gh="nome">Matheus Yoshida</strong>
-              <span>@myoshida-dev · <span data-gh="repos">2</span> repositórios públicos</span>
+              <span>@myoshida-dev · <span data-gh="repos">4</span> repositórios públicos</span>
             </span>
           </a>
         </div>
 
-        <div class="repos" data-repos>
-          <!-- Versão estática (aparece se a API do GitHub não responder); o JS troca pela lista ao vivo -->
-          <a class="cartao" href="https://github.com/myoshida-dev/portfolio" target="_blank" rel="noopener">
-            <div class="cartao__midia"><img src="https://opengraph.githubassets.com/1/myoshida-dev/portfolio" alt="" width="1200" height="600" loading="lazy"></div>
-            <div class="cartao__corpo">
-              <p class="cartao__meta"><span class="ling" style="--cor: #663399">CSS</span><span>GitHub</span></p>
-              <h3 class="cartao__titulo">portfolio</h3>
-              <p class="cartao__desc">Portfólio pessoal — TI &amp; Automação</p>
-              <span class="cartao__link">Ver repositório ↗</span>
-            </div>
+        <article class="projeto" data-repo="loja-kobo">
+          <a class="projeto__midia" href="https://myoshida-dev.github.io/loja-kobo/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+            <img src="assets/projetos/kobo.jpg" alt="" width="1264" height="790" loading="lazy" data-parallax>
           </a>
-        </div>
-
-        <article class="cartao cartao--freela">
-          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--sage)"><span class="cartao__arte">01</span></div>
-          <div class="cartao__corpo">
-            <p class="cartao__meta"><span>Freelance</span><span>2025</span></p>
-            <h3 class="cartao__titulo">Site para assistência técnica</h3>
-            <p class="cartao__desc">Site para uma pequena empresa de assistência técnica de aparelhos.</p>
+          <div class="projeto__corpo">
+            <p class="projeto__meta"><span>E-commerce</span><span class="ling" data-gh-ling style="--cor: #663399">CSS</span><span data-gh-atualizado></span></p>
+            <h3 class="projeto__titulo">Kōbo — loja de streetwear</h3>
+            <p class="projeto__desc">Home de e-commerce de uma marca fictícia de streetwear, em HTML, CSS e JavaScript puro, com sacola, layout responsivo e acessibilidade.</p>
+            <div class="projeto__links">
+              <a href="https://myoshida-dev.github.io/loja-kobo/" target="_blank" rel="noopener">Ver site ↗</a>
+              <a href="https://github.com/myoshida-dev/loja-kobo" target="_blank" rel="noopener">Código ↗</a>
+            </div>
           </div>
         </article>
 
-        <article class="cartao cartao--freela">
-          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--rosa)"><span class="cartao__arte">02</span></div>
-          <div class="cartao__corpo">
-            <p class="cartao__meta"><span>Freelance</span><span>2025</span></p>
-            <h3 class="cartao__titulo">Site para loja de crochê</h3>
-            <p class="cartao__desc">Site para uma pequena loja de roupas de crochê.</p>
+        <article class="projeto" data-repo="drunkrats">
+          <a class="projeto__midia projeto__midia--celular" href="https://myoshida-dev.github.io/drunkrats/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+            <img class="projeto__fundo" src="assets/projetos/drunkrats.jpg" alt="" width="613" height="911" loading="lazy" data-parallax>
+            <img class="projeto__tela" src="assets/projetos/drunkrats.jpg" alt="" width="613" height="911" loading="lazy">
+          </a>
+          <div class="projeto__corpo">
+            <p class="projeto__meta"><span>App (PWA)</span><span class="ling" data-gh-ling style="--cor: #f1e05a">JavaScript</span><span data-gh-atualizado></span></p>
+            <h3 class="projeto__titulo">DrunkRats — o Strava do rolê</h3>
+            <p class="projeto__desc">App de competição entre amigos: cada ação da noite vale pontos, com ranking ao vivo, fotos, desafios e o MVP do rolê.</p>
+            <div class="projeto__links">
+              <a href="https://myoshida-dev.github.io/drunkrats/" target="_blank" rel="noopener">Ver app ↗</a>
+              <a href="https://github.com/myoshida-dev/drunkrats" target="_blank" rel="noopener">Código ↗</a>
+            </div>
           </div>
         </article>
 
-        <article class="cartao cartao--freela">
-          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--lima)"><span class="cartao__arte">03</span></div>
-          <div class="cartao__corpo">
-            <p class="cartao__meta"><span>Automação</span><span>Freelance</span></p>
-            <h3 class="cartao__titulo">Rotina automatizada</h3>
-            <p class="cartao__desc">Automação das tarefas diárias de um cliente.</p>
+        <article class="projeto">
+          <div class="projeto__midia">
+            <img src="assets/projetos/volthub.jpg" alt="" width="1248" height="780" loading="lazy" data-parallax>
+          </div>
+          <div class="projeto__corpo">
+            <p class="projeto__meta"><span>Intranet</span><span>Projeto para empresa</span></p>
+            <h3 class="projeto__titulo">VoltHub — intranet da Volt</h3>
+            <p class="projeto__desc">Portal interno com comunicados, chamados de TI, reservas de sala, agenda do dia, aniversariantes e acompanhamento de metas.</p>
           </div>
         </article>
 
