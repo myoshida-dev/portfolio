@@ -1,268 +1,335 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-tema="escuro">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Matheus Yoshida Dias — TI &amp; Automação</title>
-  <meta name="description" content="Portfólio de Matheus Yoshida Dias: estudante de Sistemas para Internet no SENAC, desenvolvedor freelancer, automações com IA e suporte técnico em São Paulo/SP.">
-  <meta name="theme-color" content="#f4f8f4">
+  <meta name="description" content="Portfólio de Matheus Yoshida Dias: sites, automações com inteligência artificial e suporte técnico em São Paulo/SP.">
+  <meta name="theme-color" content="#121713">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Matheus Yoshida Dias — TI &amp; Automação">
   <meta property="og:description" content="Sites, automações com inteligência artificial e suporte técnico. Disponível para oportunidades em São Paulo/SP.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Aplica o tema antes da pintura para evitar "piscar" -->
+  <!-- Liga as animações antes da pintura (o JS desliga se as bibliotecas não carregarem) -->
   <script>
-    (function () {
-      var dark = null;
-      try { dark = JSON.parse(localStorage.getItem('pf-dark')); } catch (e) {}
-      if (typeof dark !== 'boolean') dark = !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
-      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    })();
+    if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.classList.add('anim');
+    }
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- GSAP (ScrollTrigger + DrawSVG) e Lenis — todos gratuitos -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container site-header__inner">
-    <a class="brand" href="#inicio" aria-label="Matheus Yoshida — início">
-      <span class="brand__mark" aria-hidden="true">M</span>
-      <span class="brand__name">Matheus Yoshida</span>
-    </a>
+<a class="pular" href="#sobre">Pular para o conteúdo</a>
 
-    <nav class="nav" aria-label="Seções">
-      <a href="#sobre">Sobre</a>
-      <a href="#habilidades">Habilidades</a>
-      <a href="#experiencia">Experiência</a>
-      <a href="#contato">Contato</a>
-    </nav>
-
-    <button class="theme-toggle" type="button" aria-label="Alternar modo claro/escuro" aria-pressed="false">
-      <span class="theme-toggle__icon" aria-hidden="true">
-        <span class="when-light">&#9790;</span><span class="when-dark">&#9728;&#xFE0E;</span>
-      </span>
-      <span class="when-light">Escuro</span><span class="when-dark">Claro</span>
-    </button>
-  </div>
+<header class="topo">
+  <a class="topo__marca" href="#inicio">Matheus Yoshida</a>
+  <nav class="topo__menu" aria-label="Seções">
+    <a href="#sobre">Sobre</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a class="topo__cta" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">GitHub ↗</a>
 </header>
 
-<main class="container">
+<main>
 
-  <!-- 1. Início -->
-  <section id="inicio" class="hero">
-    <div class="hero__text">
-      <span class="badge"><span class="badge__dot" aria-hidden="true"></span>Disponível para oportunidades · São Paulo/SP</span>
-      <h1 class="hero__title">Olá, sou Matheus.<br><em>TI &amp; Automação.</em></h1>
-      <p class="hero__lead">Estudante de Sistemas para Internet no SENAC. Desenvolvo sites, crio automações com inteligência artificial e dou suporte técnico em Windows, redes e manutenção de computadores.</p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#contato">Fale comigo</a>
-        <a class="btn btn--ghost" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">Ver GitHub ↗</a>
+  <!-- ============ HERO: foto encolhe até virar card e a assinatura se desenha ============ -->
+  <section id="inicio" class="hero" data-tema="escuro" aria-label="Início">
+    <div class="hero__palco">
+
+      <div class="hero__faixas" aria-hidden="true">
+        <div class="faixa faixa--1">TI &amp; Automação · Sites · Automações com IA · Suporte técnico · TI &amp; Automação · Sites · Automações com IA · Suporte técnico ·</div>
+        <div class="faixa faixa--2">Sistemas para Internet · SENAC · São Paulo · Sistemas para Internet · SENAC · São Paulo ·</div>
+      </div>
+
+      <div class="hero__foto">
+        <img src="assets/matheus.jpeg" alt="Foto de Matheus Yoshida" width="1200" height="1600" fetchpriority="high">
+        <div class="hero__veu" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero__intro">
+        <p class="sobretitulo">Portfólio · São Paulo/SP</p>
+        <h1 class="hero__nome" aria-label="Matheus Yoshida">
+          <span class="hero__linha">Matheus</span>
+          <span class="hero__linha">Yoshida</span>
+        </h1>
+        <p class="hero__papel">TI &amp; Automação — sites, automações com IA e suporte técnico.</p>
+      </div>
+
+      <div class="hero__assinatura">
+        <svg viewBox="0 0 585 276" fill="none" stroke="currentColor" stroke-width="5.3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Assinatura de Matheus Yoshida">
+          <path d="M290 38C287.8 42 282.3 53.8 277 62C271.6 70.2 264 79.7 257.8 87C251.6 94.3 246.4 99.7 239.8 105.8C233.2 112 225.6 118.1 218 123.9C210.4 129.6 204.2 133.9 194 140.2C183.8 146.5 176.1 152.1 156.9 161.7C137.8 171.4 97.9 189.1 79 198.3C60.1 207.4 52.7 211.3 43.6 216.8C34.5 222.3 28.2 227.9 24.3 231.3C20.3 234.6 20.8 235.4 19.9 237C19 238.6 19.1 240.3 19 241"/>
+          <path d="M24 250C35.2 250 66 249.2 91 250C116 250.8 147.8 253.8 174 255C200.2 256.1 211.5 256.6 248 257C284.5 257.3 351.5 258 393 257C434.5 256 472.3 252.8 497 250.9C521.7 249.1 532.9 246.9 541 245.8C549.1 244.7 544.4 245.1 545.4 244.4C546.4 243.8 546.7 242.4 547 242"/>
+          <path d="M564 241C555.7 240.8 533.5 241 514 240C494.5 239 477.8 236.7 447 235.1C416.2 233.4 349.8 231.3 329 230C308.2 228.7 325.1 227.3 321.9 227.3C318.8 227.3 322.3 229.9 310 229.9C297.7 229.8 277.8 227.5 248 227C218.2 226.5 156.2 227.3 131 227C105.8 226.6 106.1 226 97 224.9C87.9 223.9 79.8 222 76.3 220.7C72.9 219.4 75.2 218.3 76.3 217.2C77.4 216.2 73.7 216.1 83 214.4C92.3 212.7 121.8 208.3 132 207.1C142.2 205.8 131.3 208.1 144 206.9C156.7 205.8 168.2 203.4 208 200.1C247.8 196.8 352.5 189.6 383 187.2C413.5 184.7 381.3 186.1 391 185.4C400.7 184.7 431.9 183.8 440.9 182.9C449.9 182 442.2 180.4 445.1 180.1C447.9 179.8 449.3 181.5 458 181C466.7 180.5 488 177.7 497 177.1C506 176.4 509.5 177 512 177"/>
+          <path d="M194 162C194.2 161.2 194.3 159 195.4 157.4C196.5 155.8 198.5 153.7 200.4 152.3C202.4 150.8 205.2 149.1 207.1 148.5C208.9 147.8 207.7 145.4 211.5 148.5C215.4 151.6 226.3 162.4 230.2 167.1C234.2 171.9 234.6 174.4 235.3 177C236 179.6 236.2 181.2 234.5 182.5C232.8 183.9 228.3 184.6 225 185C221.7 185.4 218.2 185.3 215 184.9C211.8 184.6 210.1 184.3 206 182.9C201.9 181.5 193.6 178.2 190.4 176.6C187.1 175.1 187.4 174.6 186.5 173.5C185.6 172.4 185.2 170.6 185 170"/>
+          <path d="M299 139C299.7 143.7 302.5 160.9 303 167C303.4 173.1 302.4 173.5 301.8 175.8C301.3 178.1 303.8 179.4 299.7 180.7C295.6 182.1 285.8 183.4 277 183.9C268.2 184.5 252 184 247 184"/>
+          <path d="M301 177C291.2 174.3 252.3 164.1 242.1 161.1C231.8 158.1 239.8 159.8 239.5 158.9C239.2 158 235.7 158.3 240.2 155.8C244.8 153.4 250.9 152.1 266.8 144.2C282.8 136.3 323.2 114.4 336 108.3C348.8 102.2 340.7 108.6 343.6 107.5C346.6 106.4 347.8 105.8 353.5 101.7C359.3 97.6 370 88.2 378 83C386 77.8 394.8 73.7 401.6 70.7C408.4 67.7 413.3 66.3 419 65.2C424.7 64.1 432.4 64 436 64.1C439.6 64.2 438.9 64.8 440.4 65.8C441.8 66.9 442.9 67.2 444.6 70.4C446.3 73.6 449.4 80.1 450.6 85C451.8 90 452.3 94.8 451.9 100C451.5 105.2 450.1 110.9 448.3 115.9C446.6 120.9 445.4 124 441.4 130.1C437.4 136.2 427.8 147.8 424.5 152.6C421.2 157.4 423.5 156.5 421.7 158.7C420 161 417.3 163.9 414.2 166.2C411.1 168.5 406.2 170.5 403 172.7C399.8 174.9 396.9 177.3 395.1 179.4C393.3 181.4 392.5 184.1 392 185"/>
+          <path d="M382 188C381.6 188.6 381.9 189.8 379.8 191.7C377.6 193.7 378.3 193.7 369 199.6C359.7 205.4 331.5 222.4 324 227"/>
+          <path d="M308 230C307.7 230.7 307.2 232.8 306.4 234C305.6 235.1 303.6 236.5 303 237"/>
+          <path d="M325 216C324.5 217.8 322.5 225.2 322 227"/>
+          <path d="M312 132C312.2 135 312.8 147 313 150"/>
+          <path d="M349 133C347.1 134.7 343.9 139.9 337.8 142.9C331.7 145.9 317.4 147.5 312.5 151.1C307.5 154.7 309.7 162.2 308.1 164.7C306.5 167.2 303.9 165.8 303 166"/>
+          <path d="M311 152C309.5 152.2 303.5 152.8 302 153"/>
+          <path d="M343 108C343 108.6 344.2 109.5 343.1 111.9C342 114.2 337.8 119.2 336.3 122.1C334.7 124.9 334.4 127.8 334 129"/>
+          <path d="M339 143C339 144.5 339.5 148.3 338.8 152C338.1 155.7 335.6 162.8 335 165"/>
+          <path d="M357 146C356.8 148.5 356.3 157.5 355.8 161C355.3 164.5 354.3 166 354 167"/>
+          <path d="M423 158C424 157.6 426.8 157.1 429.2 155.7C431.6 154.3 435.3 150.5 437.5 149.4C439.7 148.4 441.4 144.3 442.3 149.4C443.2 154.5 442.9 174.9 443 180"/>
+          <path d="M426 152C426.3 152.7 427.7 155.3 428 156"/>
+          <path d="M418 176C421 175.2 432 172 436 171.2C440 170.4 441 171 442 171"/>
+          <path d="M465 160C462.8 161 455.7 164.7 452 166C448.3 167.3 444.5 167.7 443 168"/>
+          <path d="M447 168C447.3 169.2 448.7 173 448.9 175C449.1 177 448.1 179.2 448 180"/>
+          <path d="M213 20C213.2 23 213.1 32.7 214.2 38C215.2 43.3 217.2 48.3 219.4 51.6C221.5 54.9 224 56.2 227.1 57.7C230.2 59.3 236.2 60.5 238 61"/>
+        </svg>
+      </div>
+
+      <p class="hero__legenda">Estudante de Sistemas para Internet · SENAC</p>
+      <p class="hero__dica" aria-hidden="true">Role para assinar <span class="hero__dica-linha"></span></p>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE: frase se "acende" palavra por palavra ============ -->
+  <section id="sobre" class="secao sobre" data-tema="claro" aria-labelledby="sobre-titulo">
+    <div class="container">
+      <p class="sobretitulo" id="sobre-titulo">01 — Sobre</p>
+      <p class="sobre__frase" data-revelar-palavras>Passei três anos no <em>IBGE</em> entre trabalho de campo, atendimento ao público e tratamento de dados. Hoje coloco essa experiência em tecnologia: <em>sites</em>, <em>automações com IA</em> e suporte técnico.</p>
+      <div class="sobre__grade">
+        <p>Entrego projetos como freelancer, construo automações com agentes de IA e sigo no 4º semestre de Sistemas para Internet no SENAC. Meu objetivo é fazer da programação minha atuação principal e crescer na área.</p>
+        <ul class="chips">
+          <li>Inglês avançado</li>
+          <li>3 anos no IBGE</li>
+          <li>Freelancer desde 2025</li>
+        </ul>
       </div>
     </div>
-    <div class="hero__photo">
-      <img src="assets/matheus.jpeg" alt="Foto de Matheus Yoshida" width="400" height="400" fetchpriority="high">
-    </div>
   </section>
 
-  <!-- 2. Sobre -->
-  <section id="sobre" class="section split" aria-labelledby="sobre-titulo">
-    <div class="section-head">
-      <span class="eyebrow">01 — Sobre</span>
-      <h2 id="sobre-titulo" class="section-title">Dados, código e gente.</h2>
-    </div>
-    <div class="split__body prose">
-      <p>Passei três anos no <strong>IBGE</strong> como Agente de Pesquisas e Mapeamento — entre trabalho de campo, atendimento ao público e tratamento de dados em pesquisas econômicas. Essa experiência me ensinou a comunicar com clareza e a lidar com informação de verdade.</p>
-      <p>Hoje concentro minha energia em tecnologia: entrego projetos como freelancer, construo automações com agentes de IA e sigo no 4º semestre de Sistemas para Internet. Meu objetivo é fazer da programação minha atuação principal e crescer na área.</p>
-      <ul class="chips">
-        <li class="chip">Inglês avançado</li>
-        <li class="chip">3 anos no IBGE</li>
-        <li class="chip">Freelancer desde 2025</li>
-      </ul>
-    </div>
-  </section>
+  <!-- ============ PROJETOS: rolagem horizontal + repositórios do GitHub ao vivo ============ -->
+  <section id="projetos" class="horizontal" data-tema="escuro" aria-labelledby="projetos-titulo">
+    <div class="horizontal__fixo">
+      <div class="horizontal__trilho">
 
-  <!-- 3. Habilidades -->
-  <section id="habilidades" class="section stack" aria-labelledby="habilidades-titulo">
-    <div class="section-head">
-      <span class="eyebrow">02 — Habilidades</span>
-      <h2 id="habilidades-titulo" class="section-title">Competências técnicas</h2>
-    </div>
-    <div class="skills">
-      <article class="card">
-        <h3 class="card__title">Linguagens</h3>
-        <ul class="tags">
-          <li class="tag">JavaScript</li>
-          <li class="tag">Python</li>
-          <li class="tag">Java</li>
-          <li class="tag">SQL</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h3 class="card__title">Web</h3>
-        <ul class="tags">
-          <li class="tag">HTML</li>
-          <li class="tag">CSS</li>
-          <li class="tag">Bootstrap</li>
-          <li class="tag">Node.js</li>
-          <li class="tag">APIs</li>
-        </ul>
-      </article>
-      <article class="card card--accent">
-        <h3 class="card__title">Automação com IA</h3>
-        <ul class="tags">
-          <li class="tag">LLMs</li>
-          <li class="tag">Engenharia de prompt</li>
-          <li class="tag">Claude</li>
-          <li class="tag">Agentes de IA</li>
-          <li class="tag">APIs Meta</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h3 class="card__title">Bancos de dados</h3>
-        <ul class="tags">
-          <li class="tag">MySQL</li>
-          <li class="tag">Supabase</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h3 class="card__title">Infraestrutura e suporte</h3>
-        <ul class="tags">
-          <li class="tag">Windows</li>
-          <li class="tag">Redes</li>
-          <li class="tag">Manutenção de PCs</li>
-        </ul>
-      </article>
-      <article class="card card--accent2">
-        <h3 class="card__title">Ferramentas</h3>
-        <ul class="tags">
-          <li class="tag">Git &amp; GitHub</li>
-          <li class="tag">Excel avançado</li>
-          <li class="tag">Pacote Office</li>
-        </ul>
-      </article>
-    </div>
-  </section>
+        <div class="painel painel--intro">
+          <p class="sobretitulo">02 — Projetos</p>
+          <h2 id="projetos-titulo" class="titulo" data-revelar-letras>Do GitHub direto pra cá.</h2>
+          <p class="painel__texto">Os repositórios públicos são carregados ao vivo da API do GitHub. Subiu um projeto novo, ele aparece aqui.</p>
+          <a class="perfil-gh" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
+            <img class="perfil-gh__avatar" src="https://avatars.githubusercontent.com/u/199529052?v=4" alt="" width="52" height="52" loading="lazy">
+            <span class="perfil-gh__texto">
+              <strong data-gh="nome">Matheus Yoshida</strong>
+              <span>@myoshida-dev · <span data-gh="repos">2</span> repositórios públicos</span>
+            </span>
+          </a>
+        </div>
 
-  <!-- 4. Experiência -->
-  <section id="experiencia" class="section split" aria-labelledby="experiencia-titulo">
-    <div class="section-head">
-      <span class="eyebrow">03 — Experiência</span>
-      <h2 id="experiencia-titulo" class="section-title">Trajetória</h2>
-    </div>
-    <ol class="split__body timeline">
-      <li class="timeline__item">
-        <span class="timeline__date">2025 — atual</span>
-        <div class="timeline__content">
-          <div class="timeline__heading">
-            <h3 class="timeline__role">Desenvolvedor Freelancer</h3>
-            <span class="pill">Atual</span>
+        <div class="repos" data-repos>
+          <!-- Versão estática (aparece se a API do GitHub não responder); o JS troca pela lista ao vivo -->
+          <a class="cartao" href="https://github.com/myoshida-dev/portfolio" target="_blank" rel="noopener">
+            <div class="cartao__midia"><img src="https://opengraph.githubassets.com/1/myoshida-dev/portfolio" alt="" width="1200" height="600" loading="lazy"></div>
+            <div class="cartao__corpo">
+              <p class="cartao__meta"><span class="ling" style="--cor: #663399">CSS</span><span>GitHub</span></p>
+              <h3 class="cartao__titulo">portfolio</h3>
+              <p class="cartao__desc">Portfólio pessoal — TI &amp; Automação</p>
+              <span class="cartao__link">Ver repositório ↗</span>
+            </div>
+          </a>
+        </div>
+
+        <article class="cartao cartao--freela">
+          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--sage)"><span class="cartao__arte">01</span></div>
+          <div class="cartao__corpo">
+            <p class="cartao__meta"><span>Freelance</span><span>2025</span></p>
+            <h3 class="cartao__titulo">Site para assistência técnica</h3>
+            <p class="cartao__desc">Site para uma pequena empresa de assistência técnica de aparelhos.</p>
           </div>
-          <ul class="timeline__desc">
-            <li>Sites para duas pequenas empresas: uma assistência técnica de aparelhos e uma loja de roupas de crochê.</li>
-            <li>Automação das tarefas diárias de um cliente.</li>
-            <li>Projetos disponíveis em <a href="https://github.com/myoshida-dev" target="_blank" rel="noopener">github.com/myoshida-dev</a>.</li>
-          </ul>
-        </div>
-      </li>
-      <li class="timeline__item">
-        <span class="timeline__date">jan 2026 — atual</span>
-        <div class="timeline__content">
-          <h3 class="timeline__role">Uber · Motorista parceiro</h3>
-          <p class="timeline__desc">Atendimento direto a passageiros, com autonomia para organizar a rotina, planejar trajetos e usar aplicativos no dia a dia.</p>
-        </div>
-      </li>
-      <li class="timeline__item">
-        <span class="timeline__date">2022 — 2025</span>
-        <div class="timeline__content">
-          <h3 class="timeline__role">IBGE · Agente de Pesquisas e Mapeamento</h3>
-          <ul class="timeline__desc">
-            <li>Trabalho de campo com atendimento ao público, comunicação em situações variadas e condução de veículo.</li>
-            <li>Trabalho interno com pesquisas econômicas e tratamento de informações.</li>
-          </ul>
-        </div>
-      </li>
-    </ol>
-  </section>
+        </article>
 
-  <!-- 5. Formação -->
-  <section class="section edu" aria-label="Formação e idiomas">
-    <article class="edu-card">
-      <span class="eyebrow">Formação</span>
-      <h3 class="edu-card__title">Sistemas para Internet</h3>
-      <p class="edu-card__meta">Tecnologia · SENAC<br>Cursando o 4º semestre</p>
-    </article>
-    <article class="edu-card">
-      <span class="eyebrow">Idiomas</span>
-      <h3 class="edu-card__title">Inglês avançado</h3>
-      <p class="edu-card__meta">Nível IW</p>
-    </article>
-  </section>
+        <article class="cartao cartao--freela">
+          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--rosa)"><span class="cartao__arte">02</span></div>
+          <div class="cartao__corpo">
+            <p class="cartao__meta"><span>Freelance</span><span>2025</span></p>
+            <h3 class="cartao__titulo">Site para loja de crochê</h3>
+            <p class="cartao__desc">Site para uma pequena loja de roupas de crochê.</p>
+          </div>
+        </article>
 
-  <!-- 6. Certificados -->
-  <section id="certificados" class="section stack" aria-labelledby="certificados-titulo">
-    <div class="section-head">
-      <span class="eyebrow">04 — Certificados</span>
-      <h2 id="certificados-titulo" class="section-title">Cursos e certificações</h2>
-    </div>
-    <div class="certs">
-      <article class="cert">
-        <a class="cert__preview" href="assets/certificado-python.pdf" target="_blank" rel="noopener" title="Abrir certificado">
-          <img src="assets/certificado-python.jpg" alt="Certificado Python Essentials 2 — Cisco Networking Academy" width="1200" height="813" loading="lazy">
-          <span class="sr-only">Abrir certificado em PDF</span>
+        <article class="cartao cartao--freela">
+          <div class="cartao__midia cartao__midia--arte" style="--fundo: var(--lima)"><span class="cartao__arte">03</span></div>
+          <div class="cartao__corpo">
+            <p class="cartao__meta"><span>Automação</span><span>Freelance</span></p>
+            <h3 class="cartao__titulo">Rotina automatizada</h3>
+            <p class="cartao__desc">Automação das tarefas diárias de um cliente.</p>
+          </div>
+        </article>
+
+        <a class="painel painel--fim" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
+          <span class="sobretitulo">Tudo no GitHub</span>
+          <span class="painel--fim__titulo">github.com/<br>myoshida-dev ↗</span>
         </a>
-        <div class="cert__body">
-          <div class="cert__info">
-            <h3 class="cert__title">Python Essentials 2</h3>
-            <span class="cert__issuer">Cisco Networking Academy · SENAC</span>
-          </div>
-          <span class="pill">Certificado</span>
-        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HABILIDADES: faixas que correm com o scroll ============ -->
+  <section id="habilidades" class="secao habilidades" data-tema="escuro" aria-labelledby="habilidades-titulo">
+    <div class="container">
+      <p class="sobretitulo">03 — Habilidades</p>
+      <h2 id="habilidades-titulo" class="titulo" data-revelar-letras>Competências técnicas</h2>
+    </div>
+
+    <div class="esteira" aria-hidden="true">
+      <div class="esteira__linha" data-esteira="-1">JavaScript · Python · Java · SQL · HTML · CSS · Node.js · APIs · JavaScript · Python · Java · SQL · HTML · CSS · Node.js · APIs ·</div>
+      <div class="esteira__linha esteira__linha--vazada" data-esteira="1">LLMs · Agentes de IA · Claude · Supabase · MySQL · Git · LLMs · Agentes de IA · Claude · Supabase · MySQL · Git ·</div>
+    </div>
+
+    <div class="container habilidades__grade">
+      <div class="grupo">
+        <h3 class="grupo__titulo">Linguagens</h3>
+        <ul class="tags"><li>JavaScript</li><li>Python</li><li>Java</li><li>SQL</li></ul>
+      </div>
+      <div class="grupo">
+        <h3 class="grupo__titulo">Web</h3>
+        <ul class="tags"><li>HTML</li><li>CSS</li><li>Bootstrap</li><li>Node.js</li><li>APIs</li></ul>
+      </div>
+      <div class="grupo grupo--destaque">
+        <h3 class="grupo__titulo">Automação com IA</h3>
+        <ul class="tags"><li>LLMs</li><li>Engenharia de prompt</li><li>Claude</li><li>Agentes de IA</li><li>APIs Meta</li></ul>
+      </div>
+      <div class="grupo">
+        <h3 class="grupo__titulo">Bancos de dados</h3>
+        <ul class="tags"><li>MySQL</li><li>Supabase</li></ul>
+      </div>
+      <div class="grupo">
+        <h3 class="grupo__titulo">Infraestrutura e suporte</h3>
+        <ul class="tags"><li>Windows</li><li>Redes</li><li>Manutenção de PCs</li></ul>
+      </div>
+      <div class="grupo">
+        <h3 class="grupo__titulo">Ferramentas</h3>
+        <ul class="tags"><li>Git &amp; GitHub</li><li>Excel avançado</li><li>Pacote Office</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIÊNCIA: linha do tempo que se preenche ============ -->
+  <section id="experiencia" class="secao experiencia" data-tema="claro" aria-labelledby="experiencia-titulo">
+    <div class="container experiencia__grade">
+      <div class="experiencia__cabeca">
+        <p class="sobretitulo">04 — Experiência</p>
+        <h2 id="experiencia-titulo" class="titulo" data-revelar-letras>Trajetória</h2>
+      </div>
+
+      <div class="linha-tempo">
+        <div class="linha-tempo__trilho" aria-hidden="true"><div class="linha-tempo__progresso"></div></div>
+        <ol class="linha-tempo__lista">
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__data">2025 — atual</span>
+            <h3 class="linha-tempo__cargo">Desenvolvedor Freelancer <span class="pilula">Atual</span></h3>
+            <ul class="linha-tempo__desc">
+              <li>Sites para duas pequenas empresas: uma assistência técnica de aparelhos e uma loja de roupas de crochê.</li>
+              <li>Automação das tarefas diárias de um cliente.</li>
+              <li>Projetos disponíveis em <a href="https://github.com/myoshida-dev" target="_blank" rel="noopener">github.com/myoshida-dev</a>.</li>
+            </ul>
+          </li>
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__data">jan 2026 — atual</span>
+            <h3 class="linha-tempo__cargo">Uber · Motorista parceiro</h3>
+            <p class="linha-tempo__desc">Atendimento direto a passageiros, com autonomia para organizar a rotina, planejar trajetos e usar aplicativos no dia a dia.</p>
+          </li>
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__data">2022 — 2025</span>
+            <h3 class="linha-tempo__cargo">IBGE · Agente de Pesquisas e Mapeamento</h3>
+            <ul class="linha-tempo__desc">
+              <li>Trabalho de campo com atendimento ao público, comunicação em situações variadas e condução de veículo.</li>
+              <li>Trabalho interno com pesquisas econômicas e tratamento de informações.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="container formacao">
+      <article class="formacao__item">
+        <p class="sobretitulo">Formação</p>
+        <h3>Sistemas para Internet</h3>
+        <p>Tecnologia · SENAC · cursando o 4º semestre</p>
       </article>
-      <article class="cert">
-        <a class="cert__preview" href="assets/certificado-ciberseguranca.pdf" target="_blank" rel="noopener" title="Abrir certificado">
-          <img src="assets/certificado-ciberseguranca.jpg" alt="Certificado Introdução à Cibersegurança — Cisco Networking Academy" width="1200" height="813" loading="lazy">
-          <span class="sr-only">Abrir certificado em PDF</span>
+      <article class="formacao__item">
+        <p class="sobretitulo">Idiomas</p>
+        <h3>Inglês avançado</h3>
+        <p>Nível IW</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICADOS: revelação oval + zoom com o scroll ============ -->
+  <section id="certificados" class="secao certificados" data-tema="claro" aria-labelledby="certificados-titulo">
+    <div class="container">
+      <p class="sobretitulo">05 — Certificados</p>
+      <h2 id="certificados-titulo" class="titulo" data-revelar-letras>Cursos e certificações</h2>
+
+      <div class="certs">
+        <a class="cert" href="assets/certificado-python.pdf" target="_blank" rel="noopener">
+          <div class="cert__janela" data-revelar-oval>
+            <img src="assets/certificado-python.jpg" alt="Certificado Python Essentials 2 — Cisco Networking Academy" width="1200" height="813" loading="lazy">
+          </div>
+          <div class="cert__info">
+            <h3>Python Essentials 2</h3>
+            <p>Cisco Networking Academy · SENAC</p>
+          </div>
         </a>
-        <div class="cert__body">
-          <div class="cert__info">
-            <h3 class="cert__title">Introdução à Cibersegurança</h3>
-            <span class="cert__issuer">Cisco Networking Academy · SENAC</span>
+        <a class="cert" href="assets/certificado-ciberseguranca.pdf" target="_blank" rel="noopener">
+          <div class="cert__janela" data-revelar-oval>
+            <img src="assets/certificado-ciberseguranca.jpg" alt="Certificado Introdução à Cibersegurança — Cisco Networking Academy" width="1200" height="813" loading="lazy">
           </div>
-          <span class="pill">Certificado</span>
-        </div>
-      </article>
+          <div class="cert__info">
+            <h3>Introdução à Cibersegurança</h3>
+            <p>Cisco Networking Academy · SENAC</p>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- 7. Contato -->
-  <section id="contato" class="contact" aria-labelledby="contato-titulo">
-    <div class="section-head">
-      <span class="eyebrow">05 — Contato</span>
-      <h2 id="contato-titulo" class="contact__title">Vamos conversar?</h2>
-      <p class="contact__lead">Busco uma vaga como Assistente de TI ou em Automação. Respondo rápido por e-mail.</p>
-    </div>
-    <div class="contact__links">
-      <a class="contact-link" href="mailto:matheusyoshida10@gmail.com">
-        <span class="contact-link__label">E-mail</span>
-        <span class="contact-link__value">matheusyoshida10@gmail.com</span>
-      </a>
-      <a class="contact-link" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
-        <span class="contact-link__label">GitHub</span>
-        <span class="contact-link__value">myoshida-dev ↗</span>
-      </a>
-    </div>
-  </section>
+  <!-- ============ CONTATO: assinatura se desenha de novo ao chegar ============ -->
+  <section id="contato" class="secao contato" data-tema="escuro" aria-labelledby="contato-titulo">
+    <div class="container">
+      <p class="sobretitulo">06 — Contato</p>
+      <h2 id="contato-titulo" class="contato__titulo" data-revelar-letras>Vamos conversar?</h2>
+      <p class="contato__lead">Busco uma vaga como Assistente de TI ou em Automação. Respondo rápido por e-mail.</p>
 
-  <footer class="site-footer">
-    <span>© 2026 Matheus Yoshida Dias</span>
-    <span>São Paulo/SP</span>
-  </footer>
+      <div class="contato__links">
+        <a class="contato__link" href="mailto:matheusyoshida10@gmail.com">
+          <span class="contato__rotulo">E-mail</span>
+          <span class="contato__valor">matheusyoshida10@gmail.com</span>
+        </a>
+        <a class="contato__link" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
+          <span class="contato__rotulo">GitHub</span>
+          <span class="contato__valor">myoshida-dev ↗</span>
+        </a>
+      </div>
+
+      <div class="contato__assinatura" data-assinatura-rodape></div>
+    </div>
+
+    <footer class="rodape container">
+      <span>© 2026 Matheus Yoshida Dias</span>
+      <span>São Paulo/SP</span>
+    </footer>
+  </section>
 
 </main>
 
