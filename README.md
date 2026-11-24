@@ -1,6 +1,6 @@
 # Portfólio — Matheus Yoshida Dias
 
-Site pessoal de página única (TI & Automação), com efeitos presos ao scroll: a foto do topo encolhe até virar um card enquanto a assinatura se desenha, o fundo alterna entre escuro e claro por seção e os projetos correm na horizontal.
+Site pessoal de página única (TI & Automação), com efeitos presos ao scroll: o topo mostra uma carteira de identidade ilustrativa e, ao rolar, dá zoom na foto 3x4 até ela virar um card onde a assinatura se desenha. O fundo alterna entre escuro e claro por seção e os projetos correm na horizontal.
 
 Feito em HTML, CSS e JavaScript puros, sem etapa de build. As bibliotecas vêm por CDN:
 

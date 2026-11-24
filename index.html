@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Matheus Yoshida Dias — TI &amp; Automação</title>
   <meta name="description" content="Portfólio de Matheus Yoshida Dias: sites, automações com inteligência artificial e suporte técnico em São Paulo/SP.">
-  <meta name="theme-color" content="#121713">
+  <meta name="theme-color" content="#000000">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Matheus Yoshida Dias — TI &amp; Automação">
   <meta property="og:description" content="Sites, automações com inteligência artificial e suporte técnico. Disponível para oportunidades em São Paulo/SP.">
@@ -47,8 +47,9 @@
 
 <main>
 
-  <!-- ============ HERO: foto encolhe até virar card e a assinatura se desenha ============ -->
-  <section id="inicio" class="hero" data-tema="escuro" aria-label="Início">
+  <!-- ============ HERO: identidade no centro -> zoom na foto 3x4 -> card com a assinatura ============ -->
+  <section id="inicio" class="hero" data-tema="escuro" aria-labelledby="hero-titulo">
+    <h1 id="hero-titulo" class="sr-only">Matheus Yoshida — TI &amp; Automação</h1>
     <div class="hero__palco">
 
       <div class="hero__faixas" aria-hidden="true">
@@ -56,18 +57,44 @@
         <div class="faixa faixa--2">Sistemas para Internet · SENAC · São Paulo · Sistemas para Internet · SENAC · São Paulo ·</div>
       </div>
 
-      <div class="hero__foto">
-        <img src="assets/matheus.jpeg" alt="Foto de Matheus Yoshida" width="1200" height="1600" fetchpriority="high">
-        <div class="hero__veu" aria-hidden="true"></div>
+      <!-- Carteira ilustrativa (decorativa): só a foto é real, os campos são de exemplo -->
+      <div class="hero__entrada">
+        <p class="hero__sobre sobretitulo">Portfólio · TI &amp; Automação</p>
+        <div class="rg" aria-hidden="true">
+          <div class="rg__fundo"></div>
+          <div class="rg__topo">
+            <span class="rg__selo">M</span>
+            <span class="rg__cabecalho">
+              <strong>PORTFÓLIO PROFISSIONAL</strong>
+              <span>TI &amp; Automação</span>
+              <small>Modelo ilustrativo · sem valor legal</small>
+            </span>
+            <span class="rg__holo"></span>
+          </div>
+          <div class="rg__foto"><img src="assets/matheus.jpeg" alt="" width="1079" height="1280" fetchpriority="high"></div>
+          <div class="rg__dados">
+            <p class="rg__titulo">CARTEIRA DE IDENTIDADE</p>
+            <dl class="rg__campos">
+              <div class="rg__campo rg__campo--largo"><dt>Nome / Name</dt><dd>NONONONO</dd></div>
+              <div class="rg__campo rg__campo--largo"><dt>Nome Social / Social Name</dt><dd>NONONONO</dd></div>
+              <div class="rg__campo"><dt>Registro Geral · CPF / Personal Number</dt><dd>000.000.000-00</dd></div>
+              <div class="rg__campo"><dt>Sexo / Sex</dt><dd>NONONO</dd></div>
+              <div class="rg__campo"><dt>Data de Nascimento / Date of Birth</dt><dd>DD / MM / AAAA</dd></div>
+              <div class="rg__campo"><dt>Nacionalidade / Nationality</dt><dd>NONONO</dd></div>
+              <div class="rg__campo"><dt>Naturalidade / Place of Birth</dt><dd>NONONONO</dd></div>
+              <div class="rg__campo"><dt>Data de Validade / Date of Expiry</dt><dd>DD / MM / AAAA</dd></div>
+            </dl>
+          </div>
+          <div class="rg__assinatura">
+            <span class="rg__linha"></span>
+            <small>Assinatura do Titular / Cardholder's Signature</small>
+          </div>
+        </div>
       </div>
 
-      <div class="hero__intro">
-        <p class="sobretitulo">Portfólio · São Paulo/SP</p>
-        <h1 class="hero__nome" aria-label="Matheus Yoshida">
-          <span class="hero__linha">Matheus</span>
-          <span class="hero__linha">Yoshida</span>
-        </h1>
-        <p class="hero__papel">TI &amp; Automação — sites, automações com IA e suporte técnico.</p>
+      <!-- Card final (mesmo recorte da foto da identidade, já ampliado) -->
+      <div class="hero__foto">
+        <img src="assets/matheus.jpeg" alt="Foto de Matheus Yoshida" width="1079" height="1280">
       </div>
 
       <div class="hero__assinatura">

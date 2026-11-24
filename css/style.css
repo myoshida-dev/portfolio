@@ -85,6 +85,16 @@ html.lenis, html.lenis body { height: auto; }
 }
 .pular:focus { top: 12px; }
 
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .sobretitulo {
   font-family: var(--mono);
   font-size: 12px;
@@ -142,14 +152,19 @@ html.lenis, html.lenis body { height: auto; }
    HERO
    ========================================================================== */
 
-.hero { position: relative; height: 100vh; height: 100svh; }
-.anim .hero { height: 440vh; }
+.hero {
+  position: relative;
+  height: 100vh; height: 100svh;
+  --card-w: min(52.5svh, 82vw);   /* largura do card final (3:4) */
+}
+.anim .hero { height: 460vh; }
 
 .hero__palco {
   position: relative;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: var(--escuro);
+  display: grid; place-items: center;
+  background: #000;   /* início totalmente preto */
   color: var(--tinta-clara);
 }
 .anim .hero__palco { position: sticky; top: 0; }
@@ -177,58 +192,108 @@ html.lenis, html.lenis body { height: auto; }
   -webkit-text-stroke: 1.2px oklch(0.95 0.008 150 / .4);
 }
 
-/* Foto (com animação): ocupa a tela inteira; o JS fecha o clip-path até virar um card
-   3:4 e encolhe a imagem na mesma proporção, para a foto inteira caber no card. */
-.hero__foto {
-  position: absolute; inset: 0;
-  will-change: clip-path;
+/* ---------- Carteira de identidade ilustrativa ----------
+   Tudo dentro dela é medido em cqw (% da largura da carteira), então ela escala inteira.
+   O JS amplia a carteira com a origem no centro da foto 3x4 até a foto ficar do tamanho
+   do card final; aí troca pela .hero__foto, que tem exatamente o mesmo recorte. */
+.hero__entrada {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
 }
-.hero__foto img {
-  position: absolute; left: 50%; top: 50%;
-  width: max(100%, 75svh); height: auto; max-width: none;
-  aspect-ratio: 3 / 4;
-  translate: -50% -50%;
-  filter: grayscale(1) contrast(1.15);
+.hero__sobre { color: oklch(0.72 0 0); }
+
+.rg {
+  position: relative;
+  width: min(640px, 90vw);
+  aspect-ratio: 1.585;              /* formato de cartão (85,6 × 54 mm) */
+  container-type: inline-size;
+  border-radius: 16px;
+  color: oklch(0.18 0 0);
+  font-family: var(--body);
+  line-height: 1.2;
   will-change: transform;
 }
-/* Sem animação: um card 3:4 parado no centro */
-html:not(.anim) .hero__foto {
-  inset: auto; left: 50%; top: 50%;
-  width: min(52.5vh, 82vw); aspect-ratio: 3 / 4;
-  translate: -50% -50%;
-  border-radius: var(--raio); overflow: hidden;
-}
-html:not(.anim) .hero__foto img { position: static; width: 100%; height: 100%; translate: none; object-fit: cover; }
-
-.hero__veu {
+/* Paleta neutra (croma 0): só tons de cinza, para combinar com o preto e branco do card final */
+.rg__fundo {
   position: absolute; inset: 0;
-  background: linear-gradient(0deg, oklch(0.17 0.012 150 / .9) 0%, oklch(0.17 0.012 150 / .35) 38%, transparent 60%);
-  opacity: .25;
+  border-radius: inherit;
+  background:
+    radial-gradient(90% 70% at 100% 100%, oklch(0.82 0 0 / .45), transparent 60%),
+    linear-gradient(165deg, transparent 36%, oklch(0.86 0 0 / .55) 50%, oklch(0.9 0 0 / .35) 58%, transparent 72%),
+    repeating-linear-gradient(115deg, oklch(0.4 0 0 / .05) 0 1px, transparent 1px 9px),
+    linear-gradient(180deg, oklch(0.97 0 0), oklch(0.9 0 0));
+  box-shadow: 0 30px 80px -20px oklch(1 0 0 / .08), inset 0 0 0 1px oklch(1 0 0 / .6);
 }
 
-.hero__intro {
-  position: absolute;
-  left: var(--gutter); right: var(--gutter);
-  bottom: clamp(28px, 7vh, 72px);
+.rg__topo {
+  position: absolute; left: 4cqw; right: 4cqw; top: 3cqw; height: 12cqw;
+  display: flex; align-items: center; gap: 3cqw;
 }
-.hero__nome {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(68px, 13.5vw, 230px);
-  line-height: .84;
-  letter-spacing: -.045em;
-  margin: 14px 0 18px;
+.rg__selo {
+  flex: none;
+  width: 10.5cqw; height: 10.5cqw; border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(circle, oklch(0.18 0 0) 0 58%, transparent 59%),
+    conic-gradient(oklch(0.92 0 0), oklch(0.55 0 0), oklch(0.92 0 0), oklch(0.55 0 0), oklch(0.92 0 0));
+  font-family: var(--display); font-weight: 500; font-size: 5cqw; color: oklch(0.96 0 0);
 }
-.hero__linha { display: block; }
-.hero__linha:nth-child(2) { padding-left: .9em; font-style: italic; font-weight: 300; color: var(--lima); }
-.hero__papel { max-width: 34ch; font-size: clamp(15px, 1.4vw, 19px); color: oklch(0.9 0.01 150); }
+.rg__cabecalho { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3cqw; }
+.rg__cabecalho strong { font-size: 3.9cqw; font-weight: 800; letter-spacing: .02em; color: oklch(0.2 0 0); }
+.rg__cabecalho span { font-size: 2.2cqw; font-weight: 700; color: oklch(0.35 0 0); }
+.rg__cabecalho small { font-size: 1.55cqw; color: oklch(0.48 0 0); }
+.rg__holo {
+  flex: none;
+  width: 8.5cqw; height: 8.5cqw; border-radius: 50%;
+  background: conic-gradient(from 40deg, oklch(0.95 0 0), oklch(0.7 0 0), oklch(0.98 0 0), oklch(0.62 0 0), oklch(0.95 0 0));
+  box-shadow: inset 0 0 0 1px oklch(0.6 0 0 / .4);
+  opacity: .8;
+}
 
-/* Sem animação o nome fica no canto e não briga com o card */
-html:not(.anim) .hero__intro { bottom: 24px; }
-html:not(.anim) .hero__legenda { display: none; }
-html:not(.anim) .hero__nome { font-size: clamp(48px, 7vw, 110px); }
+.rg__foto {
+  position: absolute; left: 5cqw; top: 19cqw;
+  width: 25cqw; aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  overflow: hidden;
+  background: oklch(0.82 0 0);
+}
+.rg__foto img, .hero__foto img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 30%;   /* mesmo recorte nos dois */
+}
+
+.rg__dados { position: absolute; left: 34cqw; right: 4cqw; top: 17.5cqw; }
+.rg__titulo { font-size: 3.1cqw; font-weight: 800; letter-spacing: .02em; margin-bottom: 2.2cqw; }
+.rg__campos {
+  display: grid; grid-template-columns: 1.25fr 1fr;
+  column-gap: 3cqw; row-gap: 1.5cqw;
+  margin: 0;
+}
+.rg__campo--largo { grid-column: 1 / -1; }
+.rg__campos dt { font-size: 1.45cqw; color: oklch(0.45 0 0); }
+.rg__campos dd { margin: 0; font-size: 2.25cqw; font-weight: 800; letter-spacing: .02em; }
+
+.rg__assinatura {
+  position: absolute; left: 34cqw; right: 16cqw; bottom: 3cqw;
+  display: flex; flex-direction: column; align-items: center; gap: .7cqw;
+}
+.rg__linha { width: 100%; height: 1px; background: oklch(0.6 0 0); }
+.rg__assinatura small { font-size: 1.35cqw; color: oklch(0.45 0 0); }
+
+/* ---------- Card final (estado em que a assinatura se desenha) ---------- */
+.hero__foto {
+  position: absolute; left: 50%; top: 50%; z-index: 1;
+  width: var(--card-w); aspect-ratio: 3 / 4;
+  translate: -50% -50%;
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+.hero__foto img { filter: grayscale(1) contrast(1.15); }
+.anim .hero__foto { visibility: hidden; }          /* aparece quando o zoom termina */
+html:not(.anim) .hero__entrada { display: none; }  /* sem animação: só o estado final */
 
 .hero__assinatura {
+  z-index: 3;
   position: absolute; left: 50%; top: 50%;
   width: min(80vw, 1000px);
   transform: translate(-50%, -54%);
@@ -255,9 +320,9 @@ html:not(.anim) .hero__nome { font-size: clamp(48px, 7vw, 110px); }
 @keyframes dica { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
 @media (max-width: 768px) {
+  .hero { --card-w: min(42svh, 82vw); }
   .hero__assinatura { width: 96vw; }
   .anim .hero__dica { right: var(--gutter); left: auto; transform: none; }
-  .hero__intro { bottom: 72px; }
 }
 
 /* ==========================================================================

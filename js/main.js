@@ -74,52 +74,67 @@
 
     var mm = gsap.matchMedia();
 
-    // --- HERO: foto em tela cheia vira card, faixas correm e a assinatura se desenha ---
+    // --- HERO: identidade no centro -> zoom na foto 3x4 -> card com a assinatura ---
     var palco = document.querySelector('.hero__palco');
-    // Centralização em % via GSAP (o "translate" do CSS viraria pixels fixos e quebraria no resize)
-    var fotoHero = document.querySelector('.hero__foto img');
-    fotoHero.style.translate = 'none';
-    gsap.set(fotoHero, { xPercent: -50, yPercent: -50 });
+    var rg = document.querySelector('.rg');
+    var rgFoto = rg.querySelector('.rg__foto');
+    var cardFinal = document.querySelector('.hero__foto');
 
-    mm.add({ celular: '(max-width: 768px)', desktop: '(min-width: 769px)' }, function (ctx) {
-      // Card 3:4 centralizado; a imagem encolhe na mesma proporção para caber inteira nele.
-      var medidas = function () {
-        var vw = palco.clientWidth, vh = palco.clientHeight;
-        var h = vh * (ctx.conditions.celular ? 0.56 : 0.7), w = h * 0.75;
-        if (w > vw * 0.82) { w = vw * 0.82; h = w / 0.75; }
-        var topo = (vh - h) / 2, lado = (vw - w) / 2;
-        var larguraImg = Math.max(vw, vh * 0.75);
-        return {
-          clip: 'inset(' + topo + 'px ' + lado + 'px ' + topo + 'px ' + lado + 'px round 18px)',
-          escala: (w / larguraImg) * 1.04
-        };
+    // Posição de um elemento dentro do palco pelo layout (offset* ignora os transforms do GSAP)
+    var posicaoNoPalco = function (el) {
+      var x = 0, y = 0;
+      while (el && el !== palco) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+      return { x: x, y: y };
+    };
+
+    // Quanto e para onde ampliar a carteira para a foto 3x4 virar o card final.
+    // A origem do zoom é o centro da foto: ela cresce sem sair do lugar e depois vai ao centro da tela.
+    var zoom = function () {
+      var foto = posicaoNoPalco(rgFoto), carteira = posicaoNoPalco(rg);
+      var cx = foto.x + rgFoto.offsetWidth / 2;
+      var cy = foto.y + rgFoto.offsetHeight / 2;
+      var escala = cardFinal.offsetHeight / rgFoto.offsetHeight;
+      return {
+        origem: (cx - carteira.x) + 'px ' + (cy - carteira.y) + 'px',
+        x: palco.clientWidth / 2 - cx,
+        y: palco.clientHeight / 2 - cy,
+        escala: escala,
+        raio: (18 / escala) + 'px'   // depois de ampliado, o canto fica igual ao do card (18px)
       };
+    };
+    var valor = function (chave) { return function () { return zoom()[chave]; }; };
 
+    mm.add('(min-width: 0px)', function () {
       var tl = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true }
       });
 
-      tl.fromTo('.hero__foto', { clipPath: 'inset(0px 0px 0px 0px round 0px)' }, { clipPath: function () { return medidas().clip; }, duration: 3, ease: 'power2.inOut' }, 0)
-        .fromTo('.hero__foto img', { scale: 1.05, filter: 'grayscale(0) contrast(1)' }, { scale: function () { return medidas().escala; }, filter: 'grayscale(1) contrast(1.15)', duration: 3, ease: 'power2.inOut' }, 0)
-        .fromTo('.hero__veu', { opacity: 1 }, { opacity: 0.25, duration: 3 }, 0)
-        .fromTo('.hero__intro', { yPercent: 0, autoAlpha: 1 }, { yPercent: -25, autoAlpha: 0, duration: 1.4, ease: 'power1.in' }, 0)
-        .fromTo('.hero__dica', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.4 }, 0)
-        .fromTo('.hero__faixas', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.4 }, 1.4)
+      tl
+        // 1. Zoom: a carteira cresce em direção à foto 3x4
+        .fromTo(rg,
+          { x: 0, y: 0, scale: 1, transformOrigin: valor('origem') },
+          { x: valor('x'), y: valor('y'), scale: valor('escala'), transformOrigin: valor('origem'), duration: 3, ease: 'power2.inOut' }, 0)
+        .fromTo(rgFoto, { borderRadius: '4px' }, { borderRadius: valor('raio'), duration: 3, ease: 'power2.inOut' }, 0)
+        .fromTo('.hero__sobre, .hero__dica', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.5 }, 0)
+        // A foto perde a cor junto com o zoom, do primeiro movimento até virar o card
+        .fromTo(rgFoto.querySelector('img'), { filter: 'grayscale(0) contrast(1)' }, { filter: 'grayscale(1) contrast(1.15)', duration: 2.9 }, 0)
+        // 2. O resto da carteira some
+        .fromTo('.rg__fundo, .rg__topo, .rg__dados, .rg__assinatura', { autoAlpha: 1 }, { autoAlpha: 0, duration: 1.1 }, 1.7)
+        // 3. Troca pelo card final (mesmo tamanho, posição e recorte), que fica nítido
+        .fromTo(cardFinal, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 2.99)
+        .fromTo(rg, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.01 }, 3)
+        // 4. Faixas ao fundo e a assinatura se desenhando
+        .fromTo('.hero__faixas', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2 }, 2.6)
         .fromTo('.faixa--1', { xPercent: 0 }, { xPercent: -28, duration: 10 }, 0)
         .fromTo('.faixa--2', { xPercent: -28 }, { xPercent: 0, duration: 10 }, 0)
-        .add(desenharAssinatura(sigTopo).duration(5.4), 3.2)
+        .add(desenharAssinatura(sigTopo).duration(5.2), 3.4)
         .fromTo('.hero__legenda', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 8.8)
         .to({}, { duration: 0.5 });
     });
 
-    // Entrada do nome ao carregar a página (não depende do scroll)
-    var letrasNome = [];
-    document.querySelectorAll('.hero__linha').forEach(function (linha) {
-      letrasNome = letrasNome.concat(dividirLetras(linha));
-    });
-    gsap.from(letrasNome, { yPercent: 115, duration: 1.1, stagger: 0.035, ease: 'power4.out', delay: 0.15 });
-    gsap.from('.hero__intro .sobretitulo, .hero__papel', { autoAlpha: 0, y: 16, duration: 0.9, stagger: 0.1, delay: 0.6, ease: 'power2.out' });
+    // Entrada da carteira ao carregar a página (não depende do scroll)
+    gsap.from('.hero__entrada', { y: 48, autoAlpha: 0, duration: 1.3, ease: 'power3.out', delay: 0.1 });
 
     // --- Títulos: letras sobem de dentro de uma "janela" ---
     document.querySelectorAll('[data-revelar-letras]').forEach(function (el) {
