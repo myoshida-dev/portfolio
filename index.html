@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matheus Yoshida Dias — TI &amp; Automação</title>
+  <meta name="description" content="Portfólio de Matheus Yoshida Dias: estudante de Sistemas para Internet no SENAC, desenvolvedor freelancer, automações com IA e suporte técnico em São Paulo/SP.">
+  <meta name="theme-color" content="#f4f8f4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Matheus Yoshida Dias — TI &amp; Automação">
+  <meta property="og:description" content="Sites, automações com inteligência artificial e suporte técnico. Disponível para oportunidades em São Paulo/SP.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Aplica o tema antes da pintura para evitar "piscar" -->
+  <script>
+    (function () {
+      var dark = null;
+      try { dark = JSON.parse(localStorage.getItem('pf-dark')); } catch (e) {}
+      if (typeof dark !== 'boolean') dark = !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Manrope:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="#inicio" aria-label="Matheus Yoshida — início">
+      <span class="brand__mark" aria-hidden="true">M</span>
+      <span class="brand__name">Matheus Yoshida</span>
+    </a>
+
+    <nav class="nav" aria-label="Seções">
+      <a href="#sobre">Sobre</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#experiencia">Experiência</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <button class="theme-toggle" type="button" aria-label="Alternar modo claro/escuro" aria-pressed="false">
+      <span class="theme-toggle__icon" aria-hidden="true">
+        <span class="when-light">&#9790;</span><span class="when-dark">&#9728;&#xFE0E;</span>
+      </span>
+      <span class="when-light">Escuro</span><span class="when-dark">Claro</span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 1. Início -->
+  <section id="inicio" class="hero">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot" aria-hidden="true"></span>Disponível para oportunidades · São Paulo/SP</span>
+      <h1 class="hero__title">Olá, sou Matheus.<br><em>TI &amp; Automação.</em></h1>
+      <p class="hero__lead">Estudante de Sistemas para Internet no SENAC. Desenvolvo sites, crio automações com inteligência artificial e dou suporte técnico em Windows, redes e manutenção de computadores.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#contato">Fale comigo</a>
+        <a class="btn btn--ghost" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">Ver GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero__photo">
+      <img src="assets/matheus.jpeg" alt="Foto de Matheus Yoshida" width="400" height="400" fetchpriority="high">
+    </div>
+  </section>
+
+  <!-- 2. Sobre -->
+  <section id="sobre" class="section split" aria-labelledby="sobre-titulo">
+    <div class="section-head">
+      <span class="eyebrow">01 — Sobre</span>
+      <h2 id="sobre-titulo" class="section-title">Dados, código e gente.</h2>
+    </div>
+    <div class="split__body prose">
+      <p>Passei três anos no <strong>IBGE</strong> como Agente de Pesquisas e Mapeamento — entre trabalho de campo, atendimento ao público e tratamento de dados em pesquisas econômicas. Essa experiência me ensinou a comunicar com clareza e a lidar com informação de verdade.</p>
+      <p>Hoje concentro minha energia em tecnologia: entrego projetos como freelancer, construo automações com agentes de IA e sigo no 4º semestre de Sistemas para Internet. Meu objetivo é fazer da programação minha atuação principal e crescer na área.</p>
+      <ul class="chips">
+        <li class="chip">Inglês avançado</li>
+        <li class="chip">3 anos no IBGE</li>
+        <li class="chip">Freelancer desde 2025</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Habilidades -->
+  <section id="habilidades" class="section stack" aria-labelledby="habilidades-titulo">
+    <div class="section-head">
+      <span class="eyebrow">02 — Habilidades</span>
+      <h2 id="habilidades-titulo" class="section-title">Competências técnicas</h2>
+    </div>
+    <div class="skills">
+      <article class="card">
+        <h3 class="card__title">Linguagens</h3>
+        <ul class="tags">
+          <li class="tag">JavaScript</li>
+          <li class="tag">Python</li>
+          <li class="tag">Java</li>
+          <li class="tag">SQL</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3 class="card__title">Web</h3>
+        <ul class="tags">
+          <li class="tag">HTML</li>
+          <li class="tag">CSS</li>
+          <li class="tag">Bootstrap</li>
+          <li class="tag">Node.js</li>
+          <li class="tag">APIs</li>
+        </ul>
+      </article>
+      <article class="card card--accent">
+        <h3 class="card__title">Automação com IA</h3>
+        <ul class="tags">
+          <li class="tag">LLMs</li>
+          <li class="tag">Engenharia de prompt</li>
+          <li class="tag">Claude</li>
+          <li class="tag">Agentes de IA</li>
+          <li class="tag">APIs Meta</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3 class="card__title">Bancos de dados</h3>
+        <ul class="tags">
+          <li class="tag">MySQL</li>
+          <li class="tag">Supabase</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3 class="card__title">Infraestrutura e suporte</h3>
+        <ul class="tags">
+          <li class="tag">Windows</li>
+          <li class="tag">Redes</li>
+          <li class="tag">Manutenção de PCs</li>
+        </ul>
+      </article>
+      <article class="card card--accent2">
+        <h3 class="card__title">Ferramentas</h3>
+        <ul class="tags">
+          <li class="tag">Git &amp; GitHub</li>
+          <li class="tag">Excel avançado</li>
+          <li class="tag">Pacote Office</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Experiência -->
+  <section id="experiencia" class="section split" aria-labelledby="experiencia-titulo">
+    <div class="section-head">
+      <span class="eyebrow">03 — Experiência</span>
+      <h2 id="experiencia-titulo" class="section-title">Trajetória</h2>
+    </div>
+    <ol class="split__body timeline">
+      <li class="timeline__item">
+        <span class="timeline__date">2025 — atual</span>
+        <div class="timeline__content">
+          <div class="timeline__heading">
+            <h3 class="timeline__role">Desenvolvedor Freelancer</h3>
+            <span class="pill">Atual</span>
+          </div>
+          <ul class="timeline__desc">
+            <li>Sites para duas pequenas empresas: uma assistência técnica de aparelhos e uma loja de roupas de crochê.</li>
+            <li>Automação das tarefas diárias de um cliente.</li>
+            <li>Projetos disponíveis em <a href="https://github.com/myoshida-dev" target="_blank" rel="noopener">github.com/myoshida-dev</a>.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="timeline__item">
+        <span class="timeline__date">jan 2026 — atual</span>
+        <div class="timeline__content">
+          <h3 class="timeline__role">Uber · Motorista parceiro</h3>
+          <p class="timeline__desc">Atendimento direto a passageiros, com autonomia para organizar a rotina, planejar trajetos e usar aplicativos no dia a dia.</p>
+        </div>
+      </li>
+      <li class="timeline__item">
+        <span class="timeline__date">2022 — 2025</span>
+        <div class="timeline__content">
+          <h3 class="timeline__role">IBGE · Agente de Pesquisas e Mapeamento</h3>
+          <ul class="timeline__desc">
+            <li>Trabalho de campo com atendimento ao público, comunicação em situações variadas e condução de veículo.</li>
+            <li>Trabalho interno com pesquisas econômicas e tratamento de informações.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 5. Formação -->
+  <section class="section edu" aria-label="Formação e idiomas">
+    <article class="edu-card">
+      <span class="eyebrow">Formação</span>
+      <h3 class="edu-card__title">Sistemas para Internet</h3>
+      <p class="edu-card__meta">Tecnologia · SENAC<br>Cursando o 4º semestre</p>
+    </article>
+    <article class="edu-card">
+      <span class="eyebrow">Idiomas</span>
+      <h3 class="edu-card__title">Inglês avançado</h3>
+      <p class="edu-card__meta">Nível IW</p>
+    </article>
+  </section>
+
+  <!-- 6. Certificados -->
+  <section id="certificados" class="section stack" aria-labelledby="certificados-titulo">
+    <div class="section-head">
+      <span class="eyebrow">04 — Certificados</span>
+      <h2 id="certificados-titulo" class="section-title">Cursos e certificações</h2>
+    </div>
+    <div class="certs">
+      <article class="cert">
+        <a class="cert__preview" href="assets/certificado-python.pdf" target="_blank" rel="noopener" title="Abrir certificado">
+          <img src="assets/certificado-python.jpg" alt="Certificado Python Essentials 2 — Cisco Networking Academy" width="1200" height="813" loading="lazy">
+          <span class="sr-only">Abrir certificado em PDF</span>
+        </a>
+        <div class="cert__body">
+          <div class="cert__info">
+            <h3 class="cert__title">Python Essentials 2</h3>
+            <span class="cert__issuer">Cisco Networking Academy · SENAC</span>
+          </div>
+          <span class="pill">Certificado</span>
+        </div>
+      </article>
+      <article class="cert">
+        <a class="cert__preview" href="assets/certificado-ciberseguranca.pdf" target="_blank" rel="noopener" title="Abrir certificado">
+          <img src="assets/certificado-ciberseguranca.jpg" alt="Certificado Introdução à Cibersegurança — Cisco Networking Academy" width="1200" height="813" loading="lazy">
+          <span class="sr-only">Abrir certificado em PDF</span>
+        </a>
+        <div class="cert__body">
+          <div class="cert__info">
+            <h3 class="cert__title">Introdução à Cibersegurança</h3>
+            <span class="cert__issuer">Cisco Networking Academy · SENAC</span>
+          </div>
+          <span class="pill">Certificado</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 7. Contato -->
+  <section id="contato" class="contact" aria-labelledby="contato-titulo">
+    <div class="section-head">
+      <span class="eyebrow">05 — Contato</span>
+      <h2 id="contato-titulo" class="contact__title">Vamos conversar?</h2>
+      <p class="contact__lead">Busco uma vaga como Assistente de TI ou em Automação. Respondo rápido por e-mail.</p>
+    </div>
+    <div class="contact__links">
+      <a class="contact-link" href="mailto:matheusyoshida10@gmail.com">
+        <span class="contact-link__label">E-mail</span>
+        <span class="contact-link__value">matheusyoshida10@gmail.com</span>
+      </a>
+      <a class="contact-link" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
+        <span class="contact-link__label">GitHub</span>
+        <span class="contact-link__value">myoshida-dev ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <span>© 2026 Matheus Yoshida Dias</span>
+    <span>São Paulo/SP</span>
+  </footer>
+
+</main>
+
+</body>
+</html>
