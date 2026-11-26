@@ -5,7 +5,7 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![GSAP](https://img.shields.io/badge/GSAP-0AE448?logo=greensock&logoColor=black)
 
-> **Resumo:** portfólio pessoal de página única de um estudante de Sistemas para Internet (SENAC), desenvolvedor freelancer e entusiasta de automações com IA, em São Paulo/SP. O site começa com uma carteira de identidade em preto e branco; ao rolar, a página dá zoom na foto 3x4 até ela virar um card onde a assinatura se desenha sozinha. Os projetos vêm ao vivo do GitHub.
+> **Resumo:** portfólio pessoal de página única de um estudante de Sistemas para Internet (SENAC), desenvolvedor freelancer e entusiasta de automações com IA, em São Paulo/SP. O site começa com uma carteira de identidade em preto e branco; ao rolar, a página dá zoom na foto 3x4 até ela virar um card onde a assinatura se desenha sozinha. Em destaque está o **Yucut**, app de agendamento usado por 2 barbearias; os outros projetos abrem galerias de prints mostrando como funcionam.
 
 ---
 
@@ -15,7 +15,7 @@
 |---|---|
 | **Início** | Fundo preto com uma carteira de identidade ilustrativa. A rolagem amplia a foto 3x4, que perde a cor até virar um card; então a assinatura se desenha traço por traço, com faixas de texto correndo ao fundo. |
 | **Sobre** | A frase de apresentação "acende" palavra por palavra e o fundo do site passa de escuro para claro. |
-| **Projetos** | A página trava e os cards andam na horizontal: loja Kōbo, app DrunkRats e intranet VoltHub, cada um com o print do projeto. Linguagem e data de atualização vêm dos repositórios no GitHub. |
+| **Projetos** | A página trava e os cards andam na horizontal: Yucut em destaque, loja Kōbo, app DrunkRats e intranet VoltHub. Clicar num card abre uma galeria de prints (setas, teclado, miniaturas e arrastar no celular). Linguagem e data de atualização vêm dos repositórios públicos no GitHub. |
 | **Habilidades** | Duas faixas de tecnologias correm em sentidos opostos. |
 | **Experiência** | A linha do tempo se preenche conforme a leitura. |
 | **Certificados** | As imagens se abrem em formato oval, com zoom suave. |
@@ -44,13 +44,14 @@ Basta abrir o `index.html` no navegador. Para testar como num servidor, qualquer
 ```
 index.html      conteúdo do site (a assinatura fica em SVG inline no topo)
 css/style.css   estilos e a carteira de identidade
-js/main.js      scroll suave, animações, assinatura e projetos do GitHub
+js/main.js      scroll suave, animações, assinatura, galerias de prints e dados do GitHub
 assets/         foto, assinatura (PNG original + SVG), prints dos projetos e certificados
 ```
 
 ## Personalização
 
-- **Projetos exibidos:** são os cards `.projeto` em `index.html` (prints em `assets/projetos/`). Para ligar um card a um repositório, use `data-repo="nome-do-repositório"`; nenhum outro repositório é puxado.
+- **Projetos exibidos:** são os cards `.projeto` em `index.html`. Para ligar um card a um repositório público, use `data-repo="nome-do-repositório"`; nenhum outro repositório é puxado.
+- **Prints de um projeto:** coloque as imagens em `assets/projetos/<projeto>/` (e as miniaturas, com o mesmo nome, em `mini/`), liste-as com uma legenda em `GALERIAS` no início de `js/main.js` e marque o card com `data-galeria="<projeto>"`.
 - **Ordem do desenho da assinatura:** é a ordem dos `<path>` dentro do SVG do topo em `index.html`.
 - **Trocar a foto:** substitua `assets/matheus.jpeg` (de preferência na vertical). A carteira e o card usam o mesmo recorte.
 - **Cores:** os tokens ficam no início de `css/style.css` (`--lima` é a cor da assinatura).

@@ -145,8 +145,8 @@
   </section>
 
   <!-- ============ PROJETOS: rolagem horizontal com os projetos escolhidos ============ -->
-  <!-- Só aparecem os cards abaixo. Cards com data-repo têm linguagem e data de atualização
-       puxadas do repositório no GitHub; nenhum outro repositório é listado. -->
+  <!-- Só aparecem os cards abaixo. data-repo liga o card a um repositório público (linguagem e
+       data de atualização vêm do GitHub); data-galeria abre os prints do projeto (lista em js/main.js). -->
   <section id="projetos" class="horizontal" data-tema="escuro" aria-labelledby="projetos-titulo">
     <div class="horizontal__fixo">
       <div class="horizontal__trilho">
@@ -154,20 +154,41 @@
         <div class="painel painel--intro">
           <p class="sobretitulo">02 — Projetos</p>
           <h2 id="projetos-titulo" class="titulo" data-revelar-letras>Projetos em destaque.</h2>
-          <p class="painel__texto">Uma loja, um app e uma intranet. Linguagem e data de atualização vêm direto dos repositórios no GitHub.</p>
+          <p class="painel__texto">Um app em uso por barbearias, uma loja, um app de rolê e uma intranet. Clique num projeto para ver os prints de como ele funciona.</p>
           <a class="perfil-gh" href="https://github.com/myoshida-dev" target="_blank" rel="noopener">
             <img class="perfil-gh__avatar" src="https://avatars.githubusercontent.com/u/199529052?v=4" alt="" width="52" height="52" loading="lazy">
             <span class="perfil-gh__texto">
               <strong data-gh="nome">Matheus Yoshida</strong>
-              <span>@myoshida-dev · <span data-gh="repos">4</span> repositórios públicos</span>
+              <span>@myoshida-dev · <span data-gh="repos">5</span> repositórios públicos</span>
             </span>
           </a>
         </div>
 
-        <article class="projeto" data-repo="loja-kobo">
-          <a class="projeto__midia" href="https://myoshida-dev.github.io/loja-kobo/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        <!-- Destaque: app em produção (repositório privado, por isso sem link de código) -->
+        <article class="projeto projeto--destaque">
+          <div class="projeto__midia projeto__midia--marca" aria-hidden="true">
+            <img class="projeto__icone" src="assets/projetos/yucut/icone.png" alt="" width="512" height="512" loading="lazy">
+            <span class="projeto__marca">
+              <strong>YUCUT</strong>
+              <span>Agende seu corte</span>
+            </span>
+          </div>
+          <div class="projeto__corpo">
+            <span class="projeto__selo">Em uso por 2 barbearias</span>
+            <p class="projeto__meta"><span>App (PWA)</span><span>Next.js + Supabase</span></p>
+            <h3 class="projeto__titulo">Yucut — agendamento para barbearias</h3>
+            <p class="projeto__desc">Busca de barbearias perto de você, agendamento em 4 passos, pagamento pelo Mercado Pago, lembretes por notificação e painéis para o dono e para os barbeiros.</p>
+            <div class="projeto__links">
+              <span class="projeto__privado">Código privado</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto" data-repo="loja-kobo" data-galeria="kobo">
+          <button class="projeto__midia" type="button" data-abrir-galeria aria-label="Ver os prints da loja Kōbo">
             <img src="assets/projetos/kobo.jpg" alt="" width="1264" height="790" loading="lazy" data-parallax>
-          </a>
+            <span class="projeto__ver">Ver prints <span data-qtd-prints></span></span>
+          </button>
           <div class="projeto__corpo">
             <p class="projeto__meta"><span>E-commerce</span><span class="ling" data-gh-ling style="--cor: #663399">CSS</span><span data-gh-atualizado></span></p>
             <h3 class="projeto__titulo">Kōbo — loja de streetwear</h3>
@@ -179,11 +200,12 @@
           </div>
         </article>
 
-        <article class="projeto" data-repo="drunkrats">
-          <a class="projeto__midia projeto__midia--celular" href="https://myoshida-dev.github.io/drunkrats/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        <article class="projeto" data-repo="drunkrats" data-galeria="drunkrats">
+          <button class="projeto__midia projeto__midia--celular" type="button" data-abrir-galeria aria-label="Ver os prints do app DrunkRats">
             <img class="projeto__fundo" src="assets/projetos/drunkrats.jpg" alt="" width="613" height="911" loading="lazy" data-parallax>
             <img class="projeto__tela" src="assets/projetos/drunkrats.jpg" alt="" width="613" height="911" loading="lazy">
-          </a>
+            <span class="projeto__ver">Ver prints <span data-qtd-prints></span></span>
+          </button>
           <div class="projeto__corpo">
             <p class="projeto__meta"><span>App (PWA)</span><span class="ling" data-gh-ling style="--cor: #f1e05a">JavaScript</span><span data-gh-atualizado></span></p>
             <h3 class="projeto__titulo">DrunkRats — o Strava do rolê</h3>
@@ -195,14 +217,18 @@
           </div>
         </article>
 
-        <article class="projeto">
-          <div class="projeto__midia">
+        <article class="projeto" data-repo="volthub" data-galeria="volthub">
+          <button class="projeto__midia" type="button" data-abrir-galeria aria-label="Ver os prints da intranet VoltHub">
             <img src="assets/projetos/volthub.jpg" alt="" width="1248" height="780" loading="lazy" data-parallax>
-          </div>
+            <span class="projeto__ver">Ver prints <span data-qtd-prints></span></span>
+          </button>
           <div class="projeto__corpo">
-            <p class="projeto__meta"><span>Intranet</span><span>Projeto para empresa</span></p>
-            <h3 class="projeto__titulo">VoltHub — intranet da Volt</h3>
-            <p class="projeto__desc">Portal interno com comunicados, chamados de TI, reservas de sala, agenda do dia, aniversariantes e acompanhamento de metas.</p>
+            <p class="projeto__meta"><span>Intranet</span><span class="ling" data-gh-ling style="--cor: #3178c6">TypeScript</span><span data-gh-atualizado></span></p>
+            <h3 class="projeto__titulo">VoltHub — intranet corporativa</h3>
+            <p class="projeto__desc">Portal interno de uma distribuidora fictícia: comunicados, chamados de TI, reservas de sala, aprovações e gestão de RH. Next.js, Prisma/PostgreSQL e Auth.js.</p>
+            <div class="projeto__links">
+              <a href="https://github.com/myoshida-dev/volthub" target="_blank" rel="noopener">Código ↗</a>
+            </div>
           </div>
         </article>
 
@@ -363,6 +389,27 @@
   </section>
 
 </main>
+
+<!-- Galeria de prints dos projetos (aberta pelo JS ao clicar num card) -->
+<dialog class="galeria" aria-labelledby="galeria-titulo" data-lenis-prevent>
+  <div class="galeria__topo">
+    <div>
+      <p class="sobretitulo" data-galeria-contador></p>
+      <h2 id="galeria-titulo" class="galeria__titulo" data-galeria-titulo></h2>
+    </div>
+    <button class="galeria__fechar" type="button" data-galeria-fechar aria-label="Fechar galeria">✕</button>
+  </div>
+  <div class="galeria__palco">
+    <button class="galeria__seta galeria__seta--ant" type="button" data-galeria-ant aria-label="Print anterior">←</button>
+    <figure class="galeria__figura">
+      <div class="galeria__tela" data-galeria-tela><img alt="" data-galeria-img></div>
+      <figcaption class="galeria__legenda" data-galeria-legenda></figcaption>
+    </figure>
+    <button class="galeria__seta galeria__seta--prox" type="button" data-galeria-prox aria-label="Próximo print">→</button>
+  </div>
+  <p class="galeria__nota" data-galeria-nota></p>
+  <div class="galeria__miniaturas" data-galeria-miniaturas></div>
+</dialog>
 
 </body>
 </html>

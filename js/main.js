@@ -16,6 +16,69 @@
     Python: '#3572A5', Java: '#b07219', PHP: '#4F5D95', Shell: '#89e051', 'Jupyter Notebook': '#DA5B0B'
   };
 
+  // ---------------------------------------------------------------------------
+  // Prints de cada projeto (abertos ao clicar no card com data-galeria="chave").
+  // Cada item: [arquivo, legenda]. As miniaturas ficam em <pasta>/mini/ com o mesmo nome.
+  // ---------------------------------------------------------------------------
+  var GALERIAS = {
+    kobo: {
+      titulo: 'Kōbo — loja de streetwear',
+      pasta: 'assets/projetos/kobo/',
+      itens: [
+        ['01-inicio.jpg', 'Página inicial com o drop da coleção'],
+        ['02-mais-vendidos.jpg', 'Mais vendidos, com preço, parcelamento e botão de adicionar'],
+        ['03-sacola.jpg', 'Sacola lateral com os itens, quantidades e total'],
+        ['04-sobre.jpg', 'Sobre a marca e chamada para a lista de e-mails'],
+        ['05-newsletter.jpg', 'Newsletter e rodapé'],
+        ['06-celular-inicio.jpg', 'Versão para celular'],
+        ['07-celular-menu.jpg', 'Menu no celular']
+      ]
+    },
+    drunkrats: {
+      titulo: 'DrunkRats — o Strava do rolê',
+      pasta: 'assets/projetos/drunkrats/',
+      nota: 'Prints com dados de exemplo e nomes fictícios.',
+      itens: [
+        ['01-entrar.jpg', 'Entrada: cada um escolhe o próprio perfil'],
+        ['02-inicio.jpg', 'Início: os lançamentos da noite e quem está liderando'],
+        ['03-ranking.jpg', 'Ranking da noite, mentira da noite e prêmios'],
+        ['04-desafios.jpg', 'Desafios da noite, cada um com sua pontuação'],
+        ['05-conversa.jpg', 'Conversa fiada com reações em emoji'],
+        ['06-lancar.jpg', 'Lançar: foto, frase e o que rolou'],
+        ['07-membros.jpg', 'Membros e backup dos dados no aparelho']
+      ]
+    },
+    volthub: {
+      titulo: 'VoltHub — intranet corporativa',
+      pasta: 'assets/projetos/volthub/',
+      nota: 'Empresa, pessoas e dados fictícios.',
+      itens: [
+        ['01-login.jpg', 'Login'],
+        ['02-meu-dia.jpg', 'Meu dia: pendências, agenda, metas e aniversariantes'],
+        ['03-comunicados.jpg', 'Comunicados'],
+        ['04-comunicado-detalhe.jpg', 'Comunicado com confirmação de leitura'],
+        ['05-nova-solicitacao.jpg', 'Nova solicitação'],
+        ['06-chamado-conversa.jpg', 'Chamados de TI'],
+        ['07-reservas-calendario.jpg', 'Reservas de sala no calendário'],
+        ['08-pessoas.jpg', 'Pessoas: diretório da empresa'],
+        ['09-documentos.jpg', 'Documentos'],
+        ['10-meu-perfil.jpg', 'Meu perfil'],
+        ['11-aprovacoes-gestor.jpg', 'Aprovações do gestor'],
+        ['12-decisao-ferias.jpg', 'Decisão sobre um pedido de férias'],
+        ['13-fila-ti.jpg', 'Fila de atendimento da TI'],
+        ['14-gestao-rh.jpg', 'Gestão de RH'],
+        ['15-admin.jpg', 'Administração'],
+        ['16-admin-metas-ramais.jpg', 'Administração: metas e ramais'],
+        ['17-celular-meu-dia.jpg', 'Celular: Meu dia'],
+        ['18-celular-menu.jpg', 'Celular: menu'],
+        ['19-celular-login.jpg', 'Celular: login']
+      ]
+    }
+  };
+
+  // Instância do scroll suave (fica nula sem animações); a galeria pausa o Lenis enquanto está aberta.
+  var lenisAtual = null;
+
   // A assinatura do topo é copiada para o contato (um único SVG no HTML).
   var sigTopo = document.querySelector('.hero__assinatura svg');
   var alvoRodape = document.querySelector('[data-assinatura-rodape]');
@@ -28,6 +91,7 @@
   }
 
   carregarGitHub();
+  iniciarGaleria();
 
   var temBibliotecas = window.gsap && window.ScrollTrigger && window.DrawSVGPlugin && window.Lenis;
   if (!temBibliotecas || !root.classList.contains('anim')) {
@@ -45,6 +109,7 @@
 
     // --- Scroll suave: o Lenis anda no mesmo relógio do GSAP ---
     var lenis = new Lenis({ lerp: 0.09 });
+    lenisAtual = lenis;
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
@@ -339,6 +404,129 @@
       .catch(function (erro) {
         console.info('GitHub indisponível: mantendo os dados do HTML.', erro.message);
       });
+  }
+
+  // ===========================================================================
+  // GALERIA DE PRINTS
+  // ===========================================================================
+  function iniciarGaleria() {
+    var dialogo = document.querySelector('.galeria');
+    if (!dialogo || typeof dialogo.showModal !== 'function') return;
+
+    var el = function (sel) { return dialogo.querySelector(sel); };
+    var tela = el('[data-galeria-tela]'), img = el('[data-galeria-img]');
+    var miniaturas = el('[data-galeria-miniaturas]');
+    var ant = el('[data-galeria-ant]'), prox = el('[data-galeria-prox]');
+    var atual = null, indice = 0;
+
+    // Quantidade de prints no selo de cada card
+    document.querySelectorAll('.projeto[data-galeria]').forEach(function (card) {
+      var g = GALERIAS[card.dataset.galeria];
+      var qtd = card.querySelector('[data-qtd-prints]');
+      if (!g) { card.removeAttribute('data-galeria'); return; }
+      if (qtd) qtd.textContent = '(' + g.itens.length + ')';
+
+      // Clicar em qualquer parte do card abre a galeria (menos nos links "Ver site"/"Código")
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        abrir(card.dataset.galeria);
+      });
+    });
+
+    function abrir(chave) {
+      atual = GALERIAS[chave];
+      el('[data-galeria-titulo]').textContent = atual.titulo;
+      el('[data-galeria-nota]').textContent = atual.nota || '';
+
+      miniaturas.textContent = '';
+      atual.itens.forEach(function (item, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'galeria__mini';
+        b.setAttribute('aria-label', (i + 1) + '. ' + item[1]);
+        var m = document.createElement('img');
+        m.src = atual.pasta + 'mini/' + item[0];
+        m.alt = '';
+        m.loading = 'lazy';
+        b.appendChild(m);
+        b.addEventListener('click', function () { mostrar(i); });
+        miniaturas.appendChild(b);
+      });
+
+      root.classList.add('galeria-aberta');
+      if (lenisAtual) lenisAtual.stop();
+      dialogo.showModal();
+      mostrar(0);
+    }
+
+    function mostrar(i) {
+      indice = Math.max(0, Math.min(atual.itens.length - 1, i));
+      var item = atual.itens[indice];
+      tela.classList.add('is-carregando');
+      img.src = atual.pasta + item[0];
+      img.alt = item[1];
+      tela.scrollTop = 0;
+      el('[data-galeria-legenda]').textContent = item[1];
+      el('[data-galeria-contador]').textContent = (indice + 1) + ' / ' + atual.itens.length;
+      ant.disabled = indice === 0;
+      prox.disabled = indice === atual.itens.length - 1;
+      Array.prototype.forEach.call(miniaturas.children, function (b, j) {
+        if (j === indice) {
+          b.setAttribute('aria-current', 'true');
+          b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        } else {
+          b.removeAttribute('aria-current');
+        }
+      });
+      // Já carrega o próximo para a troca ficar instantânea
+      if (atual.itens[indice + 1]) new Image().src = atual.pasta + atual.itens[indice + 1][0];
+    }
+
+    // Print em pé (celular) ou muito alto: decide se cabe inteiro ou se rola na vertical
+    img.addEventListener('load', function () {
+      var proporcao = img.naturalHeight / img.naturalWidth;
+      var celular = proporcao > 1.3;
+      tela.classList.toggle('is-celular', celular);
+      tela.classList.toggle('is-rolar', celular ? proporcao > 2.4 : proporcao > 0.8);
+      tela.classList.remove('is-carregando');
+    });
+
+    // Fecha e já devolve o scroll da página (não depende do evento "close",
+    // que alguns navegadores atrasam ou não disparam)
+    function fechar() {
+      if (dialogo.open) dialogo.close();
+      liberarPagina();
+    }
+    function liberarPagina() {
+      root.classList.remove('galeria-aberta');
+      if (lenisAtual) lenisAtual.start();
+      img.removeAttribute('src');
+    }
+
+    ant.addEventListener('click', function () { mostrar(indice - 1); });
+    prox.addEventListener('click', function () { mostrar(indice + 1); });
+    el('[data-galeria-fechar]').addEventListener('click', fechar);
+
+    dialogo.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); mostrar(indice - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); mostrar(indice + 1); }
+      if (e.key === 'Escape') { e.preventDefault(); fechar(); }
+    });
+
+    // Clique fora do conteúdo (no fundo escurecido) fecha
+    dialogo.addEventListener('click', function (e) { if (e.target === dialogo) fechar(); });
+
+    // Arrastar para o lado no celular troca o print
+    var inicioX = null;
+    tela.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') inicioX = e.clientX; });
+    tela.addEventListener('pointerup', function (e) {
+      if (inicioX === null) return;
+      var dx = e.clientX - inicioX;
+      inicioX = null;
+      if (Math.abs(dx) > 50) mostrar(indice + (dx < 0 ? 1 : -1));
+    });
+
+    dialogo.addEventListener('close', liberarPagina);
   }
 
   function preencher(seletor, texto) {
